@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password: secret
+  pool: 5
+
+development:
+  <<: *default
+  database: ghr_development
+
+test:
+  <<: *default
+  database: ghr_test

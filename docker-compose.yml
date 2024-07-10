@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: on-failure
+    volumes:
+      - "postgresql-data:/var/lib/postgresql"
+    environment:
+      POSTGRES_PASSWORD: secret
+  web:
+    platform: $ARCH
+    image: ghr-web
+    volumes:
+      - .:/app
+    environment:
+      GHR_GITHUB_PERSONAL_ACCESS_TOKEN: ${GHR_GITHUB_PERSONAL_ACCESS_TOKEN}
+      GHR_HOST:                         ${GHR_HOST}
+      JIRA_USERNAME:                    ${JIRA_USERNAME}
+      JIRA_URL:                         ${JIRA_URL}
+      JIRA_PROJECT:                     ${JIRA_PROJECT}
+      JIRA_API_TOKEN:                   ${JIRA_API_TOKEN}
+    stdin_open: true
+    tty: true
+    ports:
+      - "127.0.0.1:8123:3000"
+    depends_on:
+      - db
+volumes:
+  postgresql-data:

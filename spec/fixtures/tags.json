@@ -1,0 +1,12 @@
+[
+   {
+      "commit" : {
+         "sha" : "29fab4d4a06e77e68e227690636986534ba83275",
+         "url" : "https://api.github.com/repos/metabase/metabase/commits/29fab4d4a06e77e68e227690636986534ba83275"
+      },
+      "name" : "v0.44.5",
+      "node_id" : "MDM6UmVmMzAyMDM5MzU6cmVmcy90YWdzL3YwLjQ0LjU=",
+      "tarball_url" : "https://api.github.com/repos/metabase/metabase/tarball/refs/tags/v0.44.5",
+      "zipball_url" : "https://api.github.com/repos/metabase/metabase/zipball/refs/tags/v0.44.5"
+   }
+]

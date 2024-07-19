@@ -16,4 +16,4 @@ build-info:
 	@echo flori303/ghr:$(REVISION)
 
 grype: build-web
-	@grype --by-cve --add-cpes-if-none ghr
+	@docker run --pull always --rm --volume /var/run/docker.sock:/var/run/docker.sock --name Grype anchore/grype:latest --add-cpes-if-none --by-cve ghr

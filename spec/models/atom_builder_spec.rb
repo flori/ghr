@@ -41,4 +41,14 @@ RSpec.describe AtomBuilder, type: :model do
       "<feed xmlns='http://www.w3.org/2005/Atom'><id>https://api.github.com/repos/metabase/metabase</id><title type='text'>Github Releases of metabase:metabase</title><updated>2011-11-11T11:11:11Z</updated><link href='http://foo.com/repos/metabase:metabase' rel='self'/><author><name>metabase</name></author><entry><id>https://foo.bar</id><title type='text'>The Evil (v6.6.6)</title><content type='html'>&lt;p&gt;test&lt;/p&gt;\n</content><updated>2011-11-11T11:11:11Z</updated><link href='https://foo.baz' rel='alternate'/></entry></feed>"
     )
   end
+
+  it 'can build a feed with a a release and body nil' do
+    github_release.github_repo = github_repo
+    github_release.body = nil
+    github_release.save!
+    github_repo.reload
+    expect(instance.to_atom).to eq(
+      "<feed xmlns='http://www.w3.org/2005/Atom'><id>https://api.github.com/repos/metabase/metabase</id><title type='text'>Github Releases of metabase:metabase</title><updated>2011-11-11T11:11:11Z</updated><link href='http://foo.com/repos/metabase:metabase' rel='self'/><author><name>metabase</name></author><entry><id>https://foo.bar</id><title type='text'>The Evil (v6.6.6)</title><content type='html'>\n</content><updated>2011-11-11T11:11:11Z</updated><link href='https://foo.baz' rel='alternate'/></entry></feed>"
+    )
+  end
 end

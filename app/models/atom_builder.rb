@@ -25,7 +25,7 @@ class AtomBuilder
       e.title = "%s (%s)" % [ github_release.name, github_release.tag_name ]
       e.id = github_release.url
       e.links.new href: github_release.html_url, rel: 'alternate'
-      e.content = Kramdown::Document.new(github_release.body).to_html
+      e.content = Kramdown::Document.new(github_release.body.to_s).to_html
       e.content.type = 'html'
       e.updated = github_release.published_at
       feed << e

@@ -1,4 +1,5 @@
 REVISION := $(shell git rev-parse --short HEAD)
+XDG_CACHE_HOME ?= ${HOME}/.cache
 
 build:
 	docker build --pull -t ghr-builder --target ghr-builder .
@@ -16,4 +17,4 @@ build-info:
 	@echo flori303/ghr:$(REVISION)
 
 grype: build-web
-	@docker run --pull always --rm --volume /var/run/docker.sock:/var/run/docker.sock --name Grype anchore/grype:latest --add-cpes-if-none --by-cve ghr
+	@docker run -e TERM -e COLORTERM --tty --pull always --rm --volume "${XDG_CACHE_HOME}/grype:/.cache/grype" --volume /var/run/docker.sock:/var/run/docker.sock --name Grype anchore/grype:latest --add-cpes-if-none --by-cve ghr

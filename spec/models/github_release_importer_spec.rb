@@ -24,13 +24,13 @@ RSpec.describe GithubReleaseImporter, type: :model do
           'Accept'=>'application/vnd.github.v3+json',
           'Content-Type'=>'application/json',
         }).
-        to_return(status: 200, body: fixture('releases.json'), headers: { 'Content-Type' => 'application/json' })
+        to_return(status: 200, body: read_fixture('releases.json'), headers: { 'Content-Type' => 'application/json' })
       stub_request(:get, "https://api.github.com/repos/metabase/metabase/tags?per_page=100").
         with(headers: {
           'Accept'=>'application/vnd.github.v3+json',
           'Content-Type'=>'application/json',
         }).
-        to_return(status: 200, body: fixture('tags.json'), headers: { 'Content-Type' => 'application/json' })
+        to_return(status: 200, body: read_fixture('tags.json'), headers: { 'Content-Type' => 'application/json' })
     end
 
     it 'can import new releases from github' do
@@ -59,7 +59,7 @@ RSpec.describe GithubReleaseImporter, type: :model do
             'Accept'=>'application/vnd.github.v3+json',
             'Content-Type'=>'application/json',
           }).
-          to_return(status: 200, body: fixture('tags.json'), headers: { 'Content-Type' => 'application/json' })
+          to_return(status: 200, body: read_fixture('tags.json'), headers: { 'Content-Type' => 'application/json' })
       end
 
       it 'can import new tags from github' do

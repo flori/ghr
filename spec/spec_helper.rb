@@ -1,6 +1,6 @@
 require 'webmock/rspec'
 
-def fixture(name)
+def read_fixture(name)
   path = Pathname.new(__FILE__).dirname + 'fixtures' + name
   File.read(path)
 end

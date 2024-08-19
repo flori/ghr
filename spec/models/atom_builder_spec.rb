@@ -22,7 +22,7 @@ RSpec.describe AtomBuilder, type: :model do
         'Accept'=>'application/vnd.github.v3+json',
         'Content-Type'=>'application/json',
       }).
-      to_return(status: 200, body: fixture('repos.json'), headers: { 'Content-Type' => 'application/json' })
+      to_return(status: 200, body: read_fixture('repos.json'), headers: { 'Content-Type' => 'application/json' })
   end
 
   let :instance do

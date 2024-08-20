@@ -1,0 +1,64 @@
+#!bin/rails runner
+
+require 'excon'
+Excon.defaults[:middlewares] = (
+  Excon.defaults[:middlewares] + [ Excon::Middleware::RedirectFollower ]
+).uniq
+require 'json'
+require 'term/ansicolor'
+include Term::ANSIColor
+
+config =
+  case
+  when ARGV.empty?
+    STDIN.read
+  when ARGV.size == 1
+    json  =
+      case location = ARGV.shift
+      when %r(\Ahttps?://)
+        response = Excon.get(location)
+        if response.status == 200
+          response.body
+        else
+          fail "failed to get #{location.inspect}: #{response.status_line}"
+        end
+      else
+        File.read(location)
+      end
+    JSON(json, object_class: JSON::GenericObject)
+  else
+    fail "Need location for JSON input"
+  end
+config.each do |c|
+  user, repo = c.user, c.repo
+  param = "#{user}:#{repo}"
+  jj c
+  if GithubRepo.where(user:, repo:).exists?
+    puts "Repo #{bold{param}} already #{italic{'exists'}} locally."
+    print "Update #{param}? (y/N) "
+    if STDIN.gets =~ /\Ay(es)?$/i
+      GithubRepo.where(
+        user:,
+        repo:
+      ).update!(
+        tag_filter: c.tag_filter,
+        version_requirement: c.version_requirement,
+        lightweight: c.lightweight,
+      )
+    end
+    puts bold{"Updated."}
+  else
+    puts "Repo #{bold{param}} does #{italic{'not yet exist'}} locally."
+    print "Create #{param}? (y/N) "
+    if STDIN.gets =~ /\Ay(es)?$/i
+      GithubRepo.add(
+        user:,
+        repo:,
+        tag_filter: c.tag_filter,
+        version_requirement: c.version_requirement,
+        lightweight: c.lightweight,
+      )
+      puts bold{"Created."}
+    end
+  end
+end

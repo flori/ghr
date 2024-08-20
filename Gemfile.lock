@@ -103,6 +103,7 @@ GEM
     erubi (1.13.0)
     et-orbi (1.2.11)
       tzinfo
+    excon (0.111.0)
     faraday (2.10.1)
       faraday-net_http (>= 2.0, < 3.2)
       logger
@@ -261,6 +262,8 @@ GEM
     stringio (3.1.1)
     strscan (3.1.0)
     sync (0.5.0)
+    term-ansicolor (1.11.2)
+      tins (~> 1.0)
     thor (1.3.1)
     timeout (0.4.1)
     tins (1.33.0)
@@ -294,6 +297,7 @@ DEPENDENCIES
   bootsnap
   complex_config
   debug
+  excon
   faraday-retry
   jira-ruby
   kramdown
@@ -305,6 +309,7 @@ DEPENDENCIES
   rspec-rails
   rufus-scheduler
   simplecov
+  term-ansicolor
   tins
   tzinfo-data
   webmock

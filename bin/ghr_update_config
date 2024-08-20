@@ -8,27 +8,19 @@ require 'json'
 require 'term/ansicolor'
 include Term::ANSIColor
 
-config =
-  case
-  when ARGV.empty?
-    STDIN.read
-  when ARGV.size == 1
-    json  =
-      case location = ARGV.shift
-      when %r(\Ahttps?://)
-        response = Excon.get(location)
-        if response.status == 200
-          response.body
-        else
-          fail "failed to get #{location.inspect}: #{response.status_line}"
-        end
-      else
-        File.read(location)
-      end
-    JSON(json, object_class: JSON::GenericObject)
-  else
-    fail "Need location for JSON input"
-  end
+ARGV.empty? and fail "need a location for JSON input"
+config = case location = ARGV.shift
+         when %r(\Ahttps?://)
+           response = Excon.get(location)
+           if response.status == 200
+             response.body
+           else
+             fail "failed to get #{location.inspect}: #{response.status_line}"
+           end
+         else
+           File.read(location)
+         end
+config = JSON(config, object_class: JSON::GenericObject)
 config.each do |c|
   user, repo = c.user, c.repo
   param = "#{user}:#{repo}"

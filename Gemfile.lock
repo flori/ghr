@@ -81,6 +81,8 @@ GEM
     bigdecimal (3.1.8)
     bootsnap (1.18.4)
       msgpack (~> 1.2)
+    brakeman (6.2.1)
+      racc
     builder (3.3.0)
     complex_config (0.20.0)
       base64
@@ -295,6 +297,7 @@ DEPENDENCIES
   atom-tools
   awesome_print
   bootsnap
+  brakeman
   complex_config
   debug
   excon

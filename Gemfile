@@ -19,6 +19,7 @@ gem 'awesome_print'
 gem 'yard'
 gem 'excon'
 gem 'term-ansicolor'
+gem 'brakeman'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.0"

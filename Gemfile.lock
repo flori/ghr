@@ -84,7 +84,7 @@ GEM
     brakeman (6.2.1)
       racc
     builder (3.3.0)
-    complex_config (0.21.1)
+    complex_config (0.22.0)
       base64
       json
       mize (~> 0.3, >= 0.3.4)
@@ -106,8 +106,9 @@ GEM
     et-orbi (1.2.11)
       tzinfo
     excon (0.111.0)
-    faraday (2.11.0)
+    faraday (2.12.0)
       faraday-net_http (>= 2.0, < 3.4)
+      json
       logger
     faraday-net_http (3.3.0)
       net-http
@@ -120,7 +121,7 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.1.1)
     hashie (5.0.0)
-    i18n (1.14.5)
+    i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
     irb (1.14.0)
@@ -132,7 +133,7 @@ GEM
       multipart-post
       oauth (~> 0.5, >= 0.5.0)
     json (2.7.2)
-    jwt (2.8.2)
+    jwt (2.9.0)
       base64
     kramdown (2.4.0)
       rexml
@@ -179,7 +180,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)

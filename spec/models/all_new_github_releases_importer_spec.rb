@@ -23,7 +23,7 @@ RSpec.describe AllNewGithubReleasesImporter, type: :model do
 
   it 'catches standard errors from GithubReleaseImporter and log them' do
     github_repo
-    allow(GithubReleaseImporter).to receive(:new).and_raise StandardError
+    expect(GithubReleaseImporter).to receive(:new).and_raise StandardError
     expect(Rails.logger).to receive(:error).with('Error StandardError "StandardError" while importing releases for metabase:metabase.')
     expect(Rails.logger).to receive(:error).with(a_kind_of(StandardError))
     described_class.new.perform

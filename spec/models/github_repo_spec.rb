@@ -24,7 +24,7 @@ RSpec.describe GithubRepo, type: :model do
 
   context 'Adding' do
     it 'can be added with a tag_filter' do
-      allow(GithubReleaseImporter).to receive(:new).
+      expect(GithubReleaseImporter).to receive(:new).
         and_return double('GithubReleaseImporter', perform: true)
       repo = GithubRepo.add(
         user: 'foo',

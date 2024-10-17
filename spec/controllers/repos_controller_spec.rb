@@ -49,7 +49,7 @@ RSpec.describe ReposController, type: :controller do
       end
 
       it "renders feed" do
-        allow_any_instance_of(AtomBuilder).to receive(:repo_url).and_return 'https://repo.com/foo'
+        expect_any_instance_of(AtomBuilder).to receive(:repo_url).and_return 'https://repo.com/foo'
         github_repo
         github_release.github_repo = github_repo
         github_release.save!

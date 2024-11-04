@@ -18,6 +18,7 @@ services:
       JIRA_URL:                         ${JIRA_URL}
       JIRA_PROJECT:                     ${JIRA_PROJECT}
       JIRA_API_TOKEN:                   ${JIRA_API_TOKEN}
+      RUBY_YJIT_ENABLE:                 "1"
     stdin_open: true
     tty: true
     ports:

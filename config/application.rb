@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module Ghr
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -28,6 +28,12 @@ module Ghr
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Specifies whether `to_time` methods preserve the UTC offset of their receivers or preserves the timezone.
+    # If set to `:zone`, `to_time` methods will use the timezone of their receivers.
+    # If set to `:offset`, `to_time` methods will use the UTC offset.
+    # If `false`, `to_time` methods will convert to the local system UTC offset instead.
+    config.active_support.to_time_preserves_timezone = :zone
 
     config.active_record.query_log_tags_enabled = true
     config.active_record.query_log_tags_format = :sqlcommenter

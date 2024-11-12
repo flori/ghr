@@ -3,7 +3,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.0"
+gem "rails", "~> 8.0"
 
 gem "pg"
 gem "tins", require: "tins/xt"
@@ -20,6 +20,7 @@ gem 'yard'
 gem 'excon'
 gem 'term-ansicolor'
 gem 'brakeman'
+gem 'ostruct'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.0"

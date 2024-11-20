@@ -24,13 +24,22 @@ class GithubRepo < ApplicationRecord
     github_repo
   end
 
+  # Returns an array of version strings that match the tag_filter and are
+  # associated with releases in this repository, sorted by the version numbers.
+  def versions
+    github_releases&.map { TagFilter.new(tag_filter).version(_1.tag_name) }&.
+      compact&.sort
+  end
+
   # Returns a string representation of this GithubRepo instance
   #
   # @return [ String ] A string in the format "user: foo, repo: bar, releases: 66, last_release: v1.2.3
   def to_s
+    releases     = versions
+    last_release = releases&.last
     {
-      user:, repo:, releases: github_releases.count,
-      last_release: github_releases&.first&.tag_name || 'n/a'
+      user:, repo:, releases: releases&.size.to_i,
+      last_release: last_release || 'n/a'
     }.map { "%s: %s" % _1.flatten } * ', '
   end
 

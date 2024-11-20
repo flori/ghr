@@ -46,7 +46,7 @@ RSpec.describe GithubRepo, type: :model do
         github_repo: kind_of(GithubRepo),
         notify_jira: false
       ).and_return github_release_importer
-      repo = GithubRepo.add(
+      GithubRepo.add(
         user: 'metabase',
         repo: 'metabase',
         tag_filter: tf = '\Av(0)\.(4\d+)\.(\d+)\z',
@@ -56,10 +56,37 @@ RSpec.describe GithubRepo, type: :model do
   end
 
   context 'Representation' do
-    it 'can be represented as a string' do
+    it 'can be represented as a string with no releases' do
       repo = GithubRepo.create user: 'foo', repo: 'bar'
       expect(repo.to_s).to eq(
         'user: foo, repo: bar, releases: 0, last_release: n/a'
+      )
+    end
+
+    it 'can be represented as a string with some releases' do
+      repo = GithubRepo.build(
+        user: 'foo', repo: 'bar', tag_filter: "\\Av(\\d+.\\d+.\\d+)\\z"
+      )
+      repo.github_releases <<
+        GithubRelease.new(
+          url:          'https://foo.bar',
+          html_url:     'https://foo.baz',
+          name:         'The Evil',
+          tag_name:     'v6.6.6',
+          published_at: Time.parse('2011-11-11T11:11:11Z'),
+          body:         'test',
+        )
+      repo.github_releases <<
+        GithubRelease.new(
+          url:          'https://foo.bar',
+          html_url:     'https://foo.baz',
+          name:         'The one-two-three',
+          tag_name:     'v1.2.3',
+          published_at: Time.parse('2011-11-11T11:11:11Z'),
+          body:         'test',
+        )
+      expect(repo.to_s).to eq(
+        'user: foo, repo: bar, releases: 2, last_release: 6.6.6'
       )
     end
   end

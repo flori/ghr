@@ -54,4 +54,13 @@ RSpec.describe GithubRepo, type: :model do
       )
     end
   end
+
+  context 'Representation' do
+    it 'can be represented as a string' do
+      repo = GithubRepo.create user: 'foo', repo: 'bar'
+      expect(repo.to_s).to eq(
+        'user: foo, repo: bar, releases: 0, last_release: n/a'
+      )
+    end
+  end
 end

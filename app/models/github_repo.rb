@@ -24,6 +24,16 @@ class GithubRepo < ApplicationRecord
     github_repo
   end
 
+  # Returns a string representation of this GithubRepo instance
+  #
+  # @return [ String ] A string in the format "user: foo, repo: bar, releases: 66, last_release: v1.2.3
+  def to_s
+    {
+      user:, repo:, releases: github_releases.count,
+      last_release: github_releases&.first&.tag_name || 'n/a'
+    }.map { "%s: %s" % _1.flatten } * ', '
+  end
+
   # @return String the unique identifier for this repository in the form of +"user:repo"+.
   def to_param
     "#{user}:#{repo}"

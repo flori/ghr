@@ -2,7 +2,7 @@ class GithubRepo < ApplicationRecord
   validates :user, presence: true
   validates :repo, presence: true, uniqueness: { scope: :user }
 
-  has_many :github_releases, dependent: :destroy
+  has_many :github_releases, -> { order(tag_name: :desc) }, dependent: :destroy
 
   # @return [User, nil] the user with the given +"user:repo"+ name if found.
   def self.find_by_param(param)

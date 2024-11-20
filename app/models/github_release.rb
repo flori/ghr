@@ -19,4 +19,8 @@ class GithubRelease < ApplicationRecord
     self.update(notify_jira: true)
     do_notify_jira
   end
+
+  def version(tag_filter)
+    TagFilter.new(tag_filter).version(tag_name)
+  end
 end

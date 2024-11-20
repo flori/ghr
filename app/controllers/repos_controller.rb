@@ -34,16 +34,19 @@ class ReposController < ApplicationController
       render status: :not_found
       return
     end
+    releases = github_repo.github_releases.sort_by do |release|
+      release.version(github_repo.tag_filter)
+    end.reverse
     respond_to do |format|
       format.atom do
-        if github_repo.github_releases.empty?
+        if releases.empty?
           render status: :not_found
         else
-          render plain: AtomBuilder.new(github_repo.github_releases, host: request.host).to_atom
+          render plain: AtomBuilder.new(releases, host: request.host).to_atom
         end
       end
       format.any do
-        render json: github_repo.github_releases.map(&:as_json)
+        render json: releases.map(&:as_json)
       end
     end
   end

@@ -1,8 +1,8 @@
-ARG RUBY=ruby:3.3.6-alpine3.21
+ARG RUBY=ruby:3.4.1-alpine3.21
 
 FROM ${RUBY} as ghr-builder
 
-RUN apk add --no-cache bash build-base git linux-headers file-dev tzdata\
+RUN apk add --no-cache bash build-base git linux-headers file-dev yaml-dev tzdata\
   postgresql-dev gcompat make
 
 WORKDIR /app

@@ -1,4 +1,4 @@
-ARG RUBY=ruby:3.4.1-alpine3.21
+ARG RUBY=ruby:3.4.2-alpine3.21
 
 FROM ${RUBY} as ghr-builder
 

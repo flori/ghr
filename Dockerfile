@@ -1,6 +1,6 @@
 ARG RUBY=ruby:3.4.2-alpine3.21
 
-FROM ${RUBY} as ghr-builder
+FROM ${RUBY} AS ghr-builder
 
 RUN apk add --no-cache bash build-base git linux-headers file-dev yaml-dev tzdata\
   postgresql-dev gcompat make
@@ -13,7 +13,7 @@ RUN bundle config set bin /usr/local/bin
 
 RUN bundle install -j $(getconf _NPROCESSORS_ONLN)
 
-FROM ${RUBY} as ghr-web
+FROM ${RUBY} AS ghr-web
 
 RUN apk add --no-cache bash tzdata postgresql-client gcompat
 
@@ -31,7 +31,7 @@ EXPOSE 3000
 # Configure the main process to run when running the image
 CMD ["rails", "server", "-b", "0.0.0.0"]
 
-FROM ghr-web as ghr
+FROM ghr-web AS ghr
 
 ARG REVISION=n/a
 

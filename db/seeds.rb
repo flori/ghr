@@ -10,7 +10,7 @@ begin
     user: 'rails',
     repo: 'rails',
     tag_filter: '\Av(\d+\.\d+\.\d+)\z',
-    version_requirement: %w[ >6 ]
+    version_requirement: %w[ >7 ]
   )
   GithubReleaseImporter.new(github_repo:, notify_jira: false).perform
 rescue ActiveRecord::RecordInvalid => e

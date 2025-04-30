@@ -90,4 +90,13 @@ RSpec.describe GithubRepo, type: :model do
       )
     end
   end
+
+  context 'Reimporting github releases' do
+    it 'can reimport' do
+      repo = GithubRepo.create user: 'foo', repo: 'bar'
+      expect(repo.github_releases).to receive(:destroy_all)
+      expect_any_instance_of(GithubReleaseImporter).to receive(:perform)
+      repo.reimport
+    end
+  end
 end

@@ -30,6 +30,15 @@ class GithubRepo < ApplicationRecord
     github_releases&.map { _1.version(tag_filter) }&.compact&.sort
   end
 
+  # Reimports all releases for this repository from GitHub.
+  #
+  # This method destroys all existing releases and then imports new ones using
+  # the GithubReleaseImporter.
+  def reimport
+    github_releases.destroy_all
+    GithubReleaseImporter.new(github_repo: self, notify_jira: false).perform
+  end
+
   # Returns a string representation of this GithubRepo instance
   #
   # @return [ String ] A string in the format "user: foo, repo: bar, releases: 66, last_release: v1.2.3

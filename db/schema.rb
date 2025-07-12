@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2023_11_10_203518) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_12_185932) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -31,7 +31,6 @@ ActiveRecord::Schema[8.0].define(version: 2023_11_10_203518) do
   create_table "github_repos", force: :cascade do |t|
     t.string "user", null: false
     t.string "repo", null: false
-    t.boolean "notify_jira", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "tag_filter", default: "", null: false

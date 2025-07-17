@@ -1,4 +1,4 @@
-ARG RUBY=ruby:3.4.5-alpine3.22
+ARG RUBY=ruby:3.4.5-alpine3.22@sha256:60d0ffed16d3cfbb3cd42c05f3c3a1c23db85d69716b06895fa54891805a7d65
 
 FROM ${RUBY} AS ghr-builder
 

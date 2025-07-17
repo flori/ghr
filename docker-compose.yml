@@ -14,6 +14,7 @@ services:
     environment:
       GHR_GITHUB_PERSONAL_ACCESS_TOKEN: ${GHR_GITHUB_PERSONAL_ACCESS_TOKEN}
       GHR_HOST:                         ${GHR_HOST}
+      GHR_SCHEDULE_EVERY:               "1h"
       JIRA_USERNAME:                    ${JIRA_USERNAME}
       JIRA_URL:                         ${JIRA_URL}
       JIRA_PROJECT:                     ${JIRA_PROJECT}

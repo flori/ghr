@@ -2,18 +2,21 @@ require 'rails_helper'
 
 RSpec.describe GithubReleaseImporter, type: :model do
   let :github_repo do
-    GithubRepo.create user: 'metabase', repo: 'metabase', tag_filter: '\Av(.+)'
+    GithubRepo.create(
+      user: 'metabase', repo: 'metabase', tag_filter: '\Av(.+)',
+      configured_notifiers: %i[ JIRA ]
+    )
   end
 
   it 'will import when github_repo is import_enabled' do
-    github_release_importer = described_class.new(github_repo:, notify_jira: true)
+    github_release_importer = described_class.new(github_repo:, notify: true)
     expect(github_release_importer.instance_variable_get(:@client)).to receive(:releases).and_return([])
     expect(github_release_importer.perform).to be_truthy
   end
 
   it "won't import when github_repo is not import_enabled" do
     github_repo.import_enabled = false
-    github_release_importer = described_class.new(github_repo:, notify_jira: true)
+    github_release_importer = described_class.new(github_repo:, notify: true)
     expect(github_release_importer.perform).to be_nil
   end
 
@@ -34,21 +37,33 @@ RSpec.describe GithubReleaseImporter, type: :model do
     end
 
     it 'can import new releases from github' do
-      github_release_importer = described_class.new(github_repo:, notify_jira: false)
+      github_release_importer = described_class.new(github_repo:, notify: false)
       expect { github_release_importer.perform }.to change {
         github_repo.reload.github_releases.size
       }.from(0).to(1)
     end
 
-    it 'can import new releases and notify jira' do
+    it 'can import new releases and notify via jira' do
+      github_repo.configured_notifiers = %i[ JIRA ]
+      github_repo.import_enabled = true
       expect(GithubReleaseJIRANotifier).to receive(:new).and_return double(perform: double)
-      github_release_importer = described_class.new(github_repo:, notify_jira: true)
+      github_release_importer = described_class.new(github_repo:, notify: true)
       github_release_importer.perform
+      expect(github_repo.github_releases.last).to be_pending_notifier_jira
+    end
+
+    it 'can import new releases and notify via e-mail' do
+      github_repo.configured_notifiers = %i[ Email ]
+      github_repo.import_enabled = true
+      expect(GithubReleaseEmailNotifier).to receive(:new).and_return double(perform: double)
+      github_release_importer = described_class.new(github_repo:, notify: true)
+      github_release_importer.perform
+      expect(github_repo.github_releases.last).to be_pending_notifier_email
     end
 
     it 'can import new releases and not notify jira' do
       expect(GithubReleaseJIRANotifier).not_to receive(:new)
-      github_release_importer = described_class.new(github_repo:, notify_jira: false)
+      github_release_importer = described_class.new(github_repo:, notify: false)
       github_release_importer.perform
     end
 
@@ -64,10 +79,30 @@ RSpec.describe GithubReleaseImporter, type: :model do
 
       it 'can import new tags from github' do
         github_repo.update(lightweight: true)
-        github_release_importer = described_class.new(github_repo:, notify_jira: false)
+        github_release_importer = described_class.new(github_repo:, notify: false)
         expect { github_release_importer.perform }.to change {
           github_repo.reload.github_releases.size
         }.from(0).to(1)
+      end
+
+      it 'can import new releases and notify jira' do
+        github_repo.update(lightweight: true)
+        github_repo.configured_notifiers = %i[ JIRA ]
+        github_repo.import_enabled = true
+        expect(GithubReleaseJIRANotifier).to receive(:new).and_return double(perform: double)
+        github_release_importer = described_class.new(github_repo:, notify: true)
+        github_release_importer.perform
+        expect(github_repo.github_releases.last).to be_pending_notifier_jira
+      end
+
+      it 'can import new releases and notify via e-mail' do
+        github_repo.update(lightweight: true)
+        github_repo.configured_notifiers = %i[ Email ]
+        github_repo.import_enabled = true
+        expect(GithubReleaseEmailNotifier).to receive(:new).and_return double(perform: double)
+        github_release_importer = described_class.new(github_repo:, notify: true)
+        github_release_importer.perform
+        expect(github_repo.github_releases.last).to be_pending_notifier_email
       end
     end
   end
@@ -79,7 +114,7 @@ RSpec.describe GithubReleaseImporter, type: :model do
       end
 
       it 'works' do
-        github_release_importer = described_class.new(github_repo:, notify_jira: false)
+        github_release_importer = described_class.new(github_repo:, notify: false)
         client = github_release_importer.send(:build_client)
         expect(client.access_token).to be_nil
       end
@@ -93,7 +128,7 @@ RSpec.describe GithubReleaseImporter, type: :model do
       end
 
       it 'works' do
-        github_release_importer = described_class.new(github_repo:, notify_jira: false)
+        github_release_importer = described_class.new(github_repo:, notify: false)
         client = github_release_importer.send(:build_client)
         expect(client.access_token).to eq 'foobar'
       end

@@ -30,6 +30,7 @@ RSpec.describe GithubRepo, type: :model do
         user: 'foo',
         repo: 'bar',
         tag_filter: tf = '\Av(0)\.(\d+)\.(\d+)\z',
+        configured_notifiers: %i[ JIRA ],
         version_requirement: %w[ ~>0.44' ]
       )
       expect(repo).to be_a GithubRepo
@@ -37,19 +38,20 @@ RSpec.describe GithubRepo, type: :model do
       expect(repo.repo).to eq 'bar'
       expect(repo.tag_filter).to eq tf
       expect(repo).to be_import_enabled
-      expect(repo).to be_jira_enabled
+      expect(repo.configured_notifiers).to eq [ :JIRA ]
     end
 
     it 'triggers importing of releases w/o notifying jira initially' do
       github_release_importer = double('GithubReleaseImporter', perform: true)
       expect(GithubReleaseImporter).to receive(:new).with(
         github_repo: kind_of(GithubRepo),
-        notify_jira: false
+        notify: false
       ).and_return github_release_importer
       GithubRepo.add(
         user: 'metabase',
         repo: 'metabase',
         tag_filter: tf = '\Av(0)\.(4\d+)\.(\d+)\z',
+        configured_notifiers: %i[ JIRA ],
         version_requirement: %w[ ~>0.44' ]
       )
     end
@@ -97,6 +99,30 @@ RSpec.describe GithubRepo, type: :model do
       expect(repo.github_releases).to receive(:destroy_all)
       expect_any_instance_of(GithubReleaseImporter).to receive(:perform)
       repo.reimport
+    end
+  end
+
+  context 'Notifier Plugins' do
+    let :repo do
+      GithubRepo.create user: 'foo', repo: 'bar'
+    end
+
+    it 'should not have any plugins configured by default' do
+      expect(repo.configured_notifiers).to be_empty
+    end
+
+    it 'should allow adding Email plugin' do
+      expect(repo.configured_notifiers).not_to include(:Email)
+      repo.configured_notifier_email = true
+      repo.save!
+      expect(repo.reload.configured_notifiers).to include :Email
+    end
+
+    it 'should allow adding JIRA plugin' do
+      expect(repo.configured_notifiers).not_to include(:JIRA)
+      repo.configured_notifier_jira = true
+      repo.save!
+      expect(repo.reload.configured_notifiers).to include :JIRA
     end
   end
 end

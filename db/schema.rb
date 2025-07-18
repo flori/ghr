@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_12_185932) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_25_004454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,9 +22,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_12_185932) do
     t.string "tag_name", null: false
     t.datetime "published_at", null: false
     t.text "body"
-    t.boolean "notify_jira", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "pending_notifiers_bitfield", default: 0, null: false
     t.index ["github_repo_id"], name: "index_github_releases_on_github_repo_id"
   end
 
@@ -36,8 +36,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_12_185932) do
     t.string "tag_filter", default: "", null: false
     t.boolean "lightweight", default: false, null: false
     t.boolean "import_enabled", default: true, null: false
-    t.boolean "jira_enabled", default: true
     t.string "version_requirement", default: [], array: true
+    t.integer "configured_notifiers_bitfield", default: 0, null: false
     t.index ["user", "repo"], name: "index_github_repos_on_user_and_repo", unique: true
   end
 end

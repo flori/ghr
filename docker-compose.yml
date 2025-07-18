@@ -15,6 +15,8 @@ services:
       GHR_GITHUB_PERSONAL_ACCESS_TOKEN: ${GHR_GITHUB_PERSONAL_ACCESS_TOKEN}
       GHR_HOST:                         ${GHR_HOST}
       GHR_SCHEDULE_EVERY:               "1h"
+      EMAIL_NOTIFY_SMTP_URL:            ${EMAIL_NOTIFY_SMTP_URL}
+      EMAIL_NOTIFY_USER:                ${EMAIL_NOTIFY_USER}
       JIRA_USERNAME:                    ${JIRA_USERNAME}
       JIRA_URL:                         ${JIRA_URL}
       JIRA_PROJECT:                     ${JIRA_PROJECT}

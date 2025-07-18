@@ -40,5 +40,17 @@ module Ghr
     config.active_record.query_log_tags = [ :application, :controller, :action, :job ]
 
     ENV['GHR_HOST'].full? { config.hosts << _1 }
+
+    if url = ENV['EMAIL_NOTIFY_SMTP_URL'].full? { URI.parse(it) }
+      # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
+      config.action_mailer.smtp_settings = {
+        user_name: url.user,
+        password: url.password,
+        address: url.host,
+        port: url.port,
+        authentication: :plain,
+        enable_starttls_auto: true,
+      }
+    end
   end
 end

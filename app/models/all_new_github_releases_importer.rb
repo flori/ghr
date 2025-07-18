@@ -1,11 +1,9 @@
 class AllNewGithubReleasesImporter
-  # Import all {GithubRepo}s where +import_enabled+ is set to true,
-  # eventually send JIRA issue notifications if +jira_enabled+ was
-  # true.
+  # Import all {GithubRepo}s where +import_enabled+ is set to true.
   def perform
     Rails.logger.info "Starting to import new releases…"
     GithubRepo.where(import_enabled: true).find_each do |github_repo|
-      if count = GithubReleaseImporter.new(github_repo:, notify_jira: github_repo.jira_enabled).perform
+      if count = GithubReleaseImporter.new(github_repo:, notify: github_repo.import_enabled).perform
         Rails.logger.info "Imported #{count} releases for #{github_repo.to_param}."
       end
     rescue => e

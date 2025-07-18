@@ -10,9 +10,10 @@ begin
     user: 'rails',
     repo: 'rails',
     tag_filter: '\Av(\d+\.\d+\.\d+)\z',
-    version_requirement: %w[ >7 ]
+    version_requirement: %w[ >7 ],
+    configured_notifiers: %i[ JIRA ]
   )
-  GithubReleaseImporter.new(github_repo:, notify_jira: false).perform
+  GithubReleaseImporter.new(github_repo:, notify: false).perform
 rescue ActiveRecord::RecordInvalid => e
   puts "Caught #{e.class}: #{e}"
 end

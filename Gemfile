@@ -5,23 +5,25 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0"
 
-gem 'json', '~> 2.10.0'
-gem "pg"
-gem "tins", require: "tins/xt"
-gem 'complex_config', require: 'complex_config/rude'
 gem "octokit"
+gem "pg"
 gem "rufus-scheduler"
 gem "simplecov"
-gem 'jira-ruby'
-gem 'faraday-retry'
+gem "tins", require: "tins/xt"
 gem 'atom-tools'
-gem 'kramdown'
 gem 'awesome_print'
-gem 'yard'
-gem 'excon'
-gem 'term-ansicolor'
 gem 'brakeman'
+gem 'complex_config'
+gem 'degu'
+gem 'excon'
+gem 'faraday-retry'
+gem 'jira-ruby'
+gem 'json', '~> 2.10.0'
+gem 'kramdown'
+gem 'kramdown-parser-gfm'
 gem 'ostruct'
+gem 'term-ansicolor'
+gem 'yard'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.0"

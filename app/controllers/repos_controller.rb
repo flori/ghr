@@ -6,18 +6,18 @@ class ReposController < ApplicationController
   def index
     render json: GithubRepo.order(:user, :repo).all.map { |github_repo|
       {
-        url:                 repo_url(github_repo.to_param),
-        atom_url:            repo_url(github_repo.to_param, format: :atom),
-        releases_count:      github_repo.github_releases.count,
-        user:                github_repo.user,
-        repo:                github_repo.repo,
-        tag_filter:          github_repo.tag_filter,
-        version_requirement: github_repo.version_requirement,
-        lightweight:         github_repo.lightweight,
-        import_enabled:      github_repo.import_enabled,
-        jira_enabled:        github_repo.jira_enabled,
-        created_at:          github_repo.created_at,
-        updated_at:          github_repo.updated_at,
+        url:                  repo_url(github_repo.to_param),
+        atom_url:             repo_url(github_repo.to_param, format: :atom),
+        releases_count:       github_repo.github_releases.count,
+        user:                 github_repo.user,
+        repo:                 github_repo.repo,
+        tag_filter:           github_repo.tag_filter,
+        version_requirement:  github_repo.version_requirement,
+        lightweight:          github_repo.lightweight,
+        import_enabled:       github_repo.import_enabled,
+        configured_notifiers: github_repo.configured_notifiers.map(&:name),
+        created_at:           github_repo.created_at,
+        updated_at:           github_repo.updated_at,
       }
     }
   end

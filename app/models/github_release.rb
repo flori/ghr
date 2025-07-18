@@ -7,20 +7,40 @@ class GithubRelease < ApplicationRecord
   validates :tag_name, presence: true
   validates :published_at, presence: true
 
-  # Notify JIRA of new release, if +notify_jira+ isn't set to false.
-  def do_notify_jira
+  has_set :pending_notifiers, class_name: Notifier::Plugin
+
+  # Notifies JIRA about the release if pending_notifier_jira is true.
+  def do_notify_via_jira
     GithubReleaseJIRANotifier.new(github_release: self).perform
   end
 
-  # Notify JIRA of new release, after setting +notify_jira+ to true. This is
-  # mostly useful if you want to be notified again or for an older release /
-  # one you skipped before.
-  def do_notify_jira!
-    self.update(notify_jira: true)
-    do_notify_jira
+  # Forces notification via JIRA even if pending_notifier_jira is false.
+  def do_notify_via_jira!
+    self.pending_notifier_jira = true
+    save!
+    do_notify_via_jira
+  end
+
+  # Notifies about the release via email using the GithubReleaseEmailNotifier.
+  def do_notify_via_email
+    GithubReleaseEmailNotifier.new(github_release: self).perform
+  end
+
+  # The do_notify_via_email! method forces the notification via email for this release
+  # regardless of the pending_notifier_email flag state.
+  def do_notify_via_email!
+    self.pending_notifier_email = true
+    save!
+    do_notify_via_email
   end
 
   def version(tag_filter)
     TagFilter.new(tag_filter).version(tag_name)
+  end
+
+  def as_json(options = {})
+    super(except: :pending_notifiers_bitfield).merge(
+      pending_notifiers: pending_notifiers.map(&:name)
+    )
   end
 end

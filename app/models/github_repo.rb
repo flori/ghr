@@ -4,6 +4,8 @@ class GithubRepo < ApplicationRecord
 
   has_many :github_releases, dependent: :destroy
 
+  has_set :configured_notifiers, class_name: Notifier::Plugin
+
   # @return [User, nil] the user with the given +"user:repo"+ name if found.
   def self.find_by_param(param)
     user, repo = param.split(?:, 2)
@@ -18,9 +20,9 @@ class GithubRepo < ApplicationRecord
   # @param version_requirement [Array<String>] A list of version requirements for the release, e. g. "~>10.3"
   # @param lightweight [Boolean] Whether to switch on the lightweight tag mode rather than the release mode.
   # @return [GithubRepo] The created GitHub repository.
-  def self.add(user:, repo:, tag_filter:, version_requirement: [], lightweight: false)
-    github_repo = create!(user:, repo:, tag_filter:, lightweight:, version_requirement:)
-    GithubReleaseImporter.new(github_repo:, notify_jira: false).perform
+  def self.add(user:, repo:, tag_filter:, configured_notifiers:, version_requirement: [], lightweight: false)
+    github_repo = create!(user:, repo:, tag_filter:, configured_notifiers:, version_requirement:, lightweight:)
+    GithubReleaseImporter.new(github_repo:, notify: false).perform
     github_repo
   end
 
@@ -36,7 +38,7 @@ class GithubRepo < ApplicationRecord
   # the GithubReleaseImporter.
   def reimport
     github_releases.destroy_all
-    GithubReleaseImporter.new(github_repo: self, notify_jira: false).perform
+    GithubReleaseImporter.new(github_repo: self, notify: false).perform
   end
 
   # Returns a string representation of this GithubRepo instance

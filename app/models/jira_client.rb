@@ -1,4 +1,7 @@
 module JIRAClient
+  include ComplexConfig::Provider::Shortcuts
+  extend ComplexConfig::Provider::Shortcuts
+
   module_function
 
   # @return [ComplexConfig::Settings] the current JIRA configuration.

@@ -22,7 +22,7 @@ release: check-TAG
 	git push origin "$(TAG)"
 
 push: check-TAG build
-	docker tag "ghr:$(TAG)" "flori303/ghr:$(TAG)"
+	docker tag "ghr:$(REVISION)" "flori303/ghr:$(TAG)"
 	docker push "flori303/ghr:$(TAG)"
 
 build-info: check-TAG

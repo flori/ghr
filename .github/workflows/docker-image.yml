@@ -16,9 +16,4 @@ jobs:
     - name: Build the Docker image
       run: |
         docker login -u flori303 -p ${{ secrets.DOCKER_BUILDER_TOKEN }}
-        if [[ "$GITHUB_REF_NAME" = "master" ]]
-        then
-          make push
-        else
-          make build
-        fi
+        make push

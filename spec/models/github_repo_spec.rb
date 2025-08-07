@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GithubRepo, type: :model do
+describe GithubRepo, type: :model do
   context 'Creating and Finding' do
     it 'can be created' do
       repo = GithubRepo.create user: 'foo', repo: 'bar'

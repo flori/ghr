@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GithubClient, type: :model do
+describe GithubClient, type: :model do
   let :gitub_client do
     double('Octokit::Client', 'auto_paginate=': true)
   end

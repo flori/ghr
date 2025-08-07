@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe JIRAClient, type: :model do
+describe JIRAClient, type: :model do
   let :jira_client do
     double('JIRA::Client')
   end

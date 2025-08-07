@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GithubReleaseJIRANotifier, type: :model do
+describe GithubReleaseJIRANotifier, type: :model do
   let :github_repo do
     GithubRepo.create(
       user: 'foo',

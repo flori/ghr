@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GithubRelease, type: :model do
+describe GithubRelease, type: :model do
   let :github_repo do
     GithubRepo.create user: 'foo', repo: 'bar'
   end

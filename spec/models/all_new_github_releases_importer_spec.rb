@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AllNewGithubReleasesImporter, type: :model do
+describe AllNewGithubReleasesImporter, type: :model do
   let :github_repo do
     GithubRepo.create(
       user: 'metabase',

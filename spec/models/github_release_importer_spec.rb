@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GithubReleaseImporter, type: :model do
+describe GithubReleaseImporter, type: :model do
   let :github_repo do
     GithubRepo.create(
       user: 'metabase', repo: 'metabase', tag_filter: '\Av(.+)',

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Repos", type: :request do
+describe "Repos", type: :request do
   let :github_release do
     GithubRelease.new(
       url:          'https://foo.bar',

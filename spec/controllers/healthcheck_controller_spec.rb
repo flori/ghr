@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HealthcheckController, type: :controller do
+describe HealthcheckController, type: :controller do
   describe "GET readyz" do
     it "renders the json response" do
       get :readyz

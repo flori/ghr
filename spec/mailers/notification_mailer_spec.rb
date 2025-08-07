@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe NotificationMailer, type: :mailer do
+describe NotificationMailer, type: :mailer do
   describe "github_release_email" do
     let :notifier do
       double(

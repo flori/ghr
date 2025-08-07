@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe VersionFilter, type: :model do
+describe VersionFilter, type: :model do
   let :github_repo do
     GithubRepo.new user: 'metabase', repo: 'metabase', tag_filter: '\Av(.+)',
       version_requirement: %w[ <3 ~>1.2.1 ]

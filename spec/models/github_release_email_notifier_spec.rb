@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GithubReleaseEmailNotifier, type: :model do
+describe GithubReleaseEmailNotifier, type: :model do
   let :github_repo do
     GithubRepo.create(
       user: 'foo',

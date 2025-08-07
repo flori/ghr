@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReposController, type: :controller do
+describe ReposController, type: :controller do
   let :github_repo do
     GithubRepo.create(
       user: 'foo', repo: 'bar', tag_filter: "\\Av(\\d+.\\d+.\\d+)\\z"

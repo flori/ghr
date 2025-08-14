@@ -7,10 +7,8 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'rspec/rails'
-require 'simplecov'
-SimpleCov.start(:rails) do
-  add_filter "#{File.basename(File.dirname(__FILE__))}/"
-end
+require 'gem_hadar/simplecov'
+GemHadar::SimpleCov.start
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

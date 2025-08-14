@@ -18,7 +18,7 @@ gem 'degu'
 gem 'excon'
 gem 'faraday-retry'
 gem 'jira-ruby'
-gem 'json', '~> 2.10.0'
+gem 'json'
 gem 'kramdown'
 gem 'kramdown-parser-gfm'
 gem 'ostruct'
@@ -57,6 +57,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
+  gem 'gem_hadar', require: false
 end
 
 group :test do

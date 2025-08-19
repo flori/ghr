@@ -122,7 +122,7 @@ GEM
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
-    gem_hadar (2.0.5)
+    gem_hadar (2.1.0)
       mize
       ollama-ruby (~> 1.0)
       rake
@@ -358,7 +358,7 @@ DEPENDENCIES
   degu
   excon
   faraday-retry
-  gem_hadar
+  gem_hadar (~> 2.1)
   jira-ruby
   json
   kramdown

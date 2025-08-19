@@ -57,7 +57,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
-  gem 'gem_hadar', require: false
+  gem 'gem_hadar', '~> 2.1', require: false
 end
 
 group :test do

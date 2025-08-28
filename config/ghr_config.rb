@@ -169,9 +169,6 @@ module GhrConfig
   end
 
   module RAILS
-    plugin YAMLPlugin
-    plugin JSONPlugin
-
     description 'Rails specific configuration settings'
 
     prefix 'RAILS'

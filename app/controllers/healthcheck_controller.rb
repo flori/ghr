@@ -1,3 +1,9 @@
+# Controller for handling health check endpoints
+#
+# This controller provides endpoints to check the readiness, liveness, and
+# revision status of the application. It is used by infrastructure tools like
+# Kubernetes to determine if the application is ready to serve requests, if it
+# is alive, and to verify the current deployment revision.
 class HealthcheckController < ApplicationController
   # Indicates the readiness of the application by returning a JSON response
   # with the status of "ok" if the database connection is established,

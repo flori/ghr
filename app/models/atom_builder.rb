@@ -1,3 +1,10 @@
+# Builds Atom feeds for GitHub releases.
+#
+# This class is responsible for constructing Atom feeds that contain
+# information about GitHub repository releases. It takes a collection of GitHub
+# releases and formats them into an Atom XML feed, including metadata such as
+# release titles, descriptions, publication dates, and links to the original
+# releases.
 class AtomBuilder
   # @param github_releases [Enumerable] an enumerable containing the github
   #                                     releases for the feed.

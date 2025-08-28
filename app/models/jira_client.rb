@@ -1,3 +1,19 @@
+# A module for interacting with the JIRA API.
+#
+# This module provides functionality to connect to a JIRA instance using
+# configuration settings, manage the client connection, and create issues
+# within JIRA. It handles authentication, client lifecycle management,
+# and integration with the application's configuration system.
+#
+# @example
+#   # Connect to JIRA
+#   client = JIRAClient.connect
+#
+#   # Check if JIRA is configured
+#   configured = JIRAClient.configured?
+#
+#   # Create an issue
+#   issue = JIRAClient.issue!(summary: 'Bug Report', description: 'Issue description')
 module JIRAClient
   include ComplexConfig::Provider::Shortcuts
   extend ComplexConfig::Provider::Shortcuts

@@ -1,3 +1,15 @@
+# Controller for managing GitHub repository endpoints.
+#
+# This controller handles requests related to GitHub repositories, providing
+# functionality to list all tracked repositories and retrieve information about
+# specific repositories, including their releases and associated data. It
+# supports both JSON and Atom feed formats for repository details and
+# release information.
+#
+# @example
+#   GET /repos - Returns a JSON array of all tracked repositories
+#   GET /repos/:id - Returns release information for a specific repository
+#   GET /repos/:id.atom - Returns an Atom feed of releases for a repository
 class ReposController < ApplicationController
   include ActionController::MimeResponds
 

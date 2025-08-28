@@ -1,3 +1,10 @@
+# A mailer class responsible for sending email notifications about GitHub
+# releases.
+#
+# This class handles the generation and delivery of email messages to
+# configured recipients when new GitHub releases are detected for tracked
+# repositories. It inherits from ApplicationMailer and provides functionality
+# specific to GitHub release notifications.
 class NotificationMailer < ApplicationMailer
   class << self
     # Checks whether email notification is enabled.

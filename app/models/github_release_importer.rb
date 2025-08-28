@@ -1,3 +1,14 @@
+# A class responsible for importing GitHub releases into the application.
+#
+# This class handles the process of fetching new releases or tags from GitHub
+# for a given repository and storing them in the database. It supports both
+# standard releases and lightweight tags, with configurable filtering based on
+# tag names and version requirements. The importer can also trigger notifications
+# via configured notifier plugins such as email or JIRA when new releases are found.
+#
+# @example Initialize and perform import
+#   importer = GithubReleaseImporter.new(github_repo: repo, notify: true)
+#   importer.perform
 class GithubReleaseImporter
   # @param [GithubRepo] github_repo GitHub repo to pull version info from
   # @param [Boolean] notify Set to true to send notifications

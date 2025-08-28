@@ -1,3 +1,17 @@
+# A GitHub repository configuration model that stores settings for tracking
+# releases and notifications.
+#
+# It includes validation for unique repository identifiers, associations with
+# GitHub releases, and methods for managing repository state such as adding new
+# repositories, reimporting releases, and retrieving version information.
+#
+# @example Adding a new repository with configuration
+#   GithubRepo.add(
+#     user: 'octocat',
+#     repo: 'Hello-World',
+#     tag_filter: '\\A[v\\d.]+\\z',
+#     configured_notifiers: [:Email, :JIRA]
+#   )
 class GithubRepo < ApplicationRecord
   validates :user, presence: true
   validates :repo, presence: true, uniqueness: { scope: :user }

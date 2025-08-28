@@ -1,8 +1,28 @@
+# A filter for GitHub repository tags that incorporates version requirements.
+#
+# This class provides functionality to match tag names against a specified
+# regular expression pattern and verify that the matched versions satisfy given
+# version requirements. It is used to determine whether a GitHub release tag
+# should be imported based on both its naming convention and version criteria.
+#
+# @example
+#   # Create a version filter for tags matching the pattern v\d+\.\d+\.\d+
+#   # and satisfying the version requirement ~> 1.0
+#   filter = VersionFilter.new('\\Av(\\d+\\.\\d+\\.\\d+)\\z', ['~> 1.0'])
+#
+#   # Check if a tag name matches the criteria
+#   filter.match('v1.2.3')  # => true
+#   filter.match('v2.0.0')  # => false (does not satisfy ~> 1.0)
 class VersionFilter
-  # @!method self.for_github_repo(github_repo)
-  #   Returns a new instance of the tagger that uses the provided GitHub repository.
-  #   @param [GithubRepo] github_repo The GitHub repository to be used.
-  #   @return [VersionFilter] A new instance of VersionFilter.
+  # Creates a new VersionFilter instance configured from a GithubRepo's
+  # settings.
+  #
+  # This method serves as a factory for creating VersionFilter objects
+  # using the tag_filter and version_requirement attributes from a given
+  # GithubRepo instance.
+  #
+  # @param github_repo [GithubRepo] the repository to configure the filter from
+  # @return [VersionFilter] a new VersionFilter instance configured with the repo's settings
   def self.for_github_repo(github_repo)
     new(
       github_repo.tag_filter,
@@ -21,7 +41,8 @@ class VersionFilter
   end
 
   # @param [String] tag_name
-  # @return [Boolean] true if the +tag_name+ was matched and the +version_requirement+ was fullfilled.
+  # @return [Boolean] true if the +tag_name+ was matched and the
+  # +version_requirement+ was fullfilled.
   def match(tag_name)
     match = @tag_filter.match(tag_name) or return false
     # The first group or the total regexp match:

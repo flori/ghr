@@ -1,8 +1,24 @@
+# A notifier class responsible for sending email notifications about GitHub
+# releases.
+#
+# This class implements the GithubReleaseNotifier module to provide
+# email-specific notification functionality. It handles the process of
+# generating and delivering email messages to configured recipients when new
+# GitHub releases are detected for tracked repositories.
+#
+# @see GithubReleaseNotifier
 class GithubReleaseEmailNotifier
   include GithubReleaseNotifier
 
-  # Perform the notify via E-Mail action for a given GitHub release if it is
-  # pending.
+  # Performs email notification for a GitHub release.
+  #
+  # This method checks if email notification is pending for the release and if
+  # the notification mailer is configured. If both conditions are met, it sends
+  # an email notification using the configured mailer. The method also updates
+  # the release's notification status after attempting to send the email.
+  #
+  # @return [GithubRelease, nil] the GitHub release instance that was processed
+  # or nil
   def perform
     @github_release.pending_notifier_email? or return
     if NotificationMailer.configured?

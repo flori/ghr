@@ -1,3 +1,19 @@
+# Module for interacting with the GitHub API.
+#
+# This module provides functionality to connect to GitHub using a personal
+# access token, manage the client connection, and handle auto-pagination of API
+# responses. It ensures that only one client instance is created and reused
+# throughout the application lifecycle.
+#
+# @example
+#   # Connect to GitHub
+#   client = GithubClient.connect
+#
+#   # Check if client is connected
+#   connected = GithubClient.connected?
+#
+#   # Disconnect the client
+#   GithubClient.disconnect
 module GithubClient
   module_function
 

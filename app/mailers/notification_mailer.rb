@@ -1,7 +1,5 @@
 class NotificationMailer < ApplicationMailer
   class << self
-    attr_accessor :notify_user
-
     # Checks whether email notification is enabled.
     #
     # @return [ TrueClass, FalseClass ] true if email notifications are
@@ -20,8 +18,14 @@ class NotificationMailer < ApplicationMailer
     notifier     = params[:notifier]
     @summary     = notifier.summary
     @description = notifier.description
-    to           = self.class.notify_user
+    to           = notify_user
     subject      = @summary
     mail(to:, subject:)
+  end
+
+  private
+
+  def notify_user
+    GHR::EMAIL::NOTIFY_USER
   end
 end

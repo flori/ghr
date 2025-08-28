@@ -13,14 +13,18 @@ describe NotificationMailer, type: :mailer do
       NotificationMailer.with(notifier:).github_release_email
     end
 
+    let :mail_to do
+      'test@example.com'
+    end
+
     before do
-      expect(NotificationMailer).to receive(:notify_user).
-        and_return('test@example.com').at_least(:once)
+      expect_any_instance_of(NotificationMailer).to receive(:notify_user).
+        and_return(mail_to)
     end
 
     it "renders the headers" do
       expect(mail.subject).to eq("The Summary")
-      expect(mail.to).to eq([NotificationMailer.notify_user])
+      expect(mail.to).to eq([mail_to])
       expect(mail.from).to eq(["noreply@example.com"])
     end
 

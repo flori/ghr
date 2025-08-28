@@ -19,7 +19,7 @@ class HealthcheckController < ApplicationController
   # status of "ok" if it was found in the environment variables REVISION and
   # displaying it with the name +revision+, otherwise status will be "nok".
   def revisionz
-    if revision = ENV['REVISION'].presence
+    if revision = GhrConfig::REVISION?
       status = 'ok'
     else
       revision = 'n/a'

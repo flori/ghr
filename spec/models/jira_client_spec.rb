@@ -34,7 +34,7 @@ describe JIRAClient, type: :model do
 
   it 'can find our main project' do
     project = double('Project')
-    expect(project).to receive(:find).with(JIRAClient.complex_config.jira.project).and_return project
+    expect(project).to receive(:find).with(GhrConfig::JIRA::PROJECT).and_return project
     expect(jira_client).to receive(:Project).and_return project
     expect(described_class.project).to eq project
   end

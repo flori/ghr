@@ -1,4 +1,5 @@
 #!bin/rails runner
+# vim: set ft=ruby et sw=2 ts=2 autoindent: 
 
 require 'excon'
 Excon.defaults[:middlewares] = (
@@ -36,6 +37,7 @@ config.each do |c|
         tag_filter: c.tag_filter,
         version_requirement: c.version_requirement,
         lightweight: c.lightweight,
+        configured_notifiers: c.configured_notifiers
       )
     end
     puts bold{"Updated."}
@@ -49,6 +51,7 @@ config.each do |c|
         tag_filter: c.tag_filter,
         version_requirement: c.version_requirement,
         lightweight: c.lightweight,
+        configured_notifiers: c.configured_notifiers
       )
       puts bold{"Created."}
     end

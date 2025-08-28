@@ -6,6 +6,9 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Setup GhrConfig configuration.
+require_relative 'ghr_config.rb'
+
 module Ghr
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -39,11 +42,9 @@ module Ghr
     config.active_record.query_log_tags_format = :sqlcommenter
     config.active_record.query_log_tags = [ :application, :controller, :action, :job ]
 
-    ENV['GHR_HOSTS_ALLOWED'].full?(:split, ?,) do |hosts|
-      hosts.each { config.hosts << _1 }
-    end
+    GhrConfig::HOSTS_ALLOWED.each { config.hosts << it }
 
-    if url = ENV['EMAIL_NOTIFY_SMTP_URL'].full? { URI.parse(it) }
+    if url = GhrConfig::EMAIL::NOTIFY_SMTP_URL?
       # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
       config.action_mailer.smtp_settings = {
         user_name: url.user,

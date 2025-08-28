@@ -116,21 +116,15 @@ describe GithubReleaseImporter, type: :model do
       it 'works' do
         github_release_importer = described_class.new(github_repo:, notify: false)
         client = github_release_importer.send(:build_client)
-        expect(client.access_token).to be_nil
+        expect(client.access_token).to eq 'ghp_jii4VITttwjnT14J2TydtaDArD1GUYFiZMJq'
       end
     end
 
     context 'with access token' do
-      around do |e|
-        ENV['GHR_GITHUB_PERSONAL_ACCESS_TOKEN'] = 'foobar'
-        e.run
-        ENV.delete('GHR_GITHUB_PERSONAL_ACCESS_TOKEN')
-      end
-
       it 'works' do
         github_release_importer = described_class.new(github_repo:, notify: false)
         client = github_release_importer.send(:build_client)
-        expect(client.access_token).to eq 'foobar'
+        expect(client.access_token).to eq 'ghp_jii4VITttwjnT14J2TydtaDArD1GUYFiZMJq'
       end
     end
   end

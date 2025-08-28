@@ -9,13 +9,15 @@ WORKDIR /app
 
 COPY Gemfile* /app/
 
+COPY ./vendor/. /app/vendor/
+
 RUN bundle config set bin /usr/local/bin
 
 RUN bundle install -j $(getconf _NPROCESSORS_ONLN)
 
 FROM ${RUBY} AS ghr-web
 
-RUN apk add --no-cache bash tzdata postgresql-client gcompat
+RUN apk add --no-cache bash tzdata postgresql-client gcompat less
 
 COPY --from=ghr-builder /usr/local/ /usr/local/
 COPY --from=ghr-builder /app/ /app/

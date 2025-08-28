@@ -4,6 +4,6 @@ return if defined?(Rails::Console) || Rails.env.test? || File.split($PROGRAM_NAM
 
 s = Rufus::Scheduler.singleton
 
-s.every ENV.fetch('GHR_SCHEDULE_EVERY', '1h') do
+s.every GhrConfig::SCHEDULE_EVERY do
   AllNewGithubReleasesImporter.new.perform
 end

@@ -11,6 +11,10 @@ describe GithubReleaseJIRANotifier, type: :model do
     )
   end
 
+  before do
+    allow(JIRAClient).to receive(:configured?).and_return true
+  end
+
   it "doesn't notify JIRA if pending_notifiers was empty" do
     github_release = GithubRelease.new pending_notifiers: []
     expect(JIRAClient).not_to receive(:issue!)

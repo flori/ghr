@@ -38,6 +38,7 @@ describe GithubRelease, type: :model do
   context 'Notify via JIRA' do
     before do
       github_repo.github_releases << github_release
+      allow(JIRAClient).to receive(:configured?).and_return true
     end
 
     describe '#do_notify_via_jira' do

@@ -1,3 +1,6 @@
+require 'gem_hadar/simplecov'
+GemHadar::SimpleCov.start
+
 require 'webmock/rspec'
 
 def read_fixture(name)
@@ -100,7 +103,29 @@ RSpec.configure do |config|
 =end
 
   config.before(:suite) do
-    ENV.delete('GHR_GITHUB_PERSONAL_ACCESS_TOKEN') # Disable any token from the environment
+    ENV['GHR_GITHUB_PERSONAL_ACCESS_TOKEN'] = 'ghp_jii4VITttwjnT14J2TydtaDArD1GUYFiZMJq' # fake it
+    ConstConf.reload
     WebMock.disable_net_connect!
+  end
+
+  module ProtectEnvVars
+    def self.apply
+      -> example do
+        if example.metadata[:protect_env]
+          begin
+            stored_env = ENV.to_h
+            example.run
+          ensure
+            ENV.replace(stored_env)
+          end
+        else
+          example.run
+        end
+      end
+    end
+  end
+
+  RSpec.configure do |config|
+    config.around(&ProtectEnvVars.apply)
   end
 end

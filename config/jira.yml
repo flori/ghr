@@ -1,7 +1,0 @@
----
-site: <%= ENV.fetch('JIRA_URL', 'null') %>
-username: <%= ENV.fetch('JIRA_USERNAME', 'null') %>
-api_token: <%= ENV.fetch('JIRA_API_TOKEN', 'null') %>
-project: <%= ENV.fetch('JIRA_PROJECT', 'null') %>
-component: <%= ENV.fetch('JIRA_COMPONENT', 'null') %>
-label: release

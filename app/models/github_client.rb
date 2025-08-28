@@ -7,7 +7,7 @@ module GithubClient
   # @return [Octokit::Client]
   def connect
     @client ||= Octokit::Client.new(
-      **{access_token: ENV['GHR_GITHUB_PERSONAL_ACCESS_TOKEN']}.compact
+      **{access_token: GhrConfig::GITHUB_PERSONAL_ACCESS_TOKEN}.compact
     )
     @client.auto_paginate = true
     @client

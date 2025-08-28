@@ -19,7 +19,6 @@ class NotificationMailer < ApplicationMailer
   # The github_release_email method generates and sends an email notification
   # for a GitHub release using the provided notifier parameters.
   #
-  # @param notifier [ Object ] the notifier object containing release information
   # @return [ Mail::Message ] the generated email message
   def github_release_email
     notifier     = params[:notifier]

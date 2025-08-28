@@ -31,6 +31,18 @@ These variables must be configured for the application to function:
 
 These variables have sensible defaults and only need to be configured if you want different behavior:
 
+#### Application Settings
+
+- `GHR_HOST` - The hostname the GHR app can be reached under (required in
+  production)
+- `GHR_HOSTS_ALLOWED` = "" - Comma-separated list of allowed hostnames for
+  Rails
+- `SCHEDULE_EVERY` = "1h" - How often to check for new releases
+- `PORT` = 3000 - Port number the GHR-App can be reached under
+- `RAILS_LOG_LEVEL` = "info" - Rails log level
+- `RAILS_MAX_THREADS` = 3 - Maximum number of Rails threads
+- `RUBY_YJIT_ENABLE` = 1 (non-test) or 0 (test) - Ruby YJIT enable flag
+
 #### JIRA Integration
 
 - `JIRA_ENABLED` = "0" - Set to "1" to enable JIRA notifications
@@ -46,16 +58,6 @@ These variables have sensible defaults and only need to be configured if you wan
 - `EMAIL_ENABLED` = "0" - Set to "1" to enable email notifications
 - `EMAIL_NOTIFY_USER` - The user to notify via email for new releases
 - `EMAIL_NOTIFY_SMTP_URL` - SMTP URL for sending emails
-
-#### Application Settings
-
-- `GHR_HOST` - The hostname the GHR app can be reached under (required in production)
-- `GHR_HOSTS_ALLOWED` = "" - Comma-separated list of allowed hostnames for Rails
-- `SCHEDULE_EVERY` = "1h" - How often to check for new releases
-- `PORT` = 3000 - Port number the GHR-App can be reached under
-- `RAILS_LOG_LEVEL` = "info" - Rails log level
-- `RAILS_MAX_THREADS` = 3 - Maximum number of Rails threads
-- `RUBY_YJIT_ENABLE` = 1 (non-test) or 0 (test) - Ruby YJIT enable flag
 
 ### Production Required Variables
 

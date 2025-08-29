@@ -1,5 +1,5 @@
 require 'gem_hadar/simplecov'
-GemHadar::SimpleCov.start
+GemHadar::SimpleCov.start(:rails)
 
 require 'webmock/rspec'
 

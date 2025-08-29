@@ -127,7 +127,7 @@ GEM
     fugit (1.11.2)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
-    gem_hadar (2.1.1)
+    gem_hadar (2.2.0)
       mize
       ollama-ruby (~> 1.0)
       rake
@@ -188,7 +188,7 @@ GEM
     multipart-post (2.4.1)
     net-http (0.6.0)
       uri
-    net-imap (0.5.9)
+    net-imap (0.5.10)
       date
       net-protocol
     net-pop (0.1.2)
@@ -364,7 +364,7 @@ DEPENDENCIES
   degu
   excon
   faraday-retry
-  gem_hadar (~> 2.1)
+  gem_hadar (~> 2.2)
   jira-ruby
   json
   kramdown

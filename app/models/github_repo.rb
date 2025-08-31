@@ -67,6 +67,19 @@ class GithubRepo < ApplicationRecord
     }.map { "%s: %s" % _1.flatten } * ', '
   end
 
+  # Returns a string representation of this GithubRepo instance
+  #
+  # This method provides a detailed string formatting of the repository's
+  # state, including user, repo, release count, and the most recent release
+  # version.
+  #
+  # @return [String] a formatted string containing repository information
+  #   in the format
+  #   "#<GithubRepo: user: foo, repo: bar, releases: 66, #   last_release: v1.2.3"
+  def inspect
+    "#<#{self.class}: #{to_s}>"
+  end
+
   # @return String the unique identifier for this repository in the form of +"user:repo"+.
   def to_param
     "#{user}:#{repo}"

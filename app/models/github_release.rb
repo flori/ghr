@@ -69,6 +69,34 @@ class GithubRelease < ApplicationRecord
     TagFilter.new(tag_filter).version(tag_name)
   end
 
+  # Returns a string representation of the GitHub release
+  #
+  # This method generates a formatted string containing key information about
+  # the GitHub release, including the repository identifier, version, and
+  # publication timestamp.
+  #
+  # @return [String] a formatted string with release information in the format
+  #   "repo: user/repo, version: 1.2.3, published_at: 2023-01-01T12:00:00Z"
+  def to_s
+    {
+      repo: to_param,
+      version:,
+      published_at: published_at.iso8601
+    }.map { "%s: %s" % _1.flatten } * ', '
+  end
+
+  # Returns a string representation of this object
+  #
+  # This method provides a detailed string formatting of the object's state,
+  # including its class name and formatted information returned by the #to_s
+  # method.
+  #
+  # @return [String] a formatted string containing the object's class name and
+  #   state information in the format "#<ClassName: text_from_to_s>"
+  def inspect
+    "#<#{self.class}: #{to_s}>"
+  end
+
   # Converts the GitHub release to a JSON representation.
   #
   # This method extends the default JSON serialization by including the names

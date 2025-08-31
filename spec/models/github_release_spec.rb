@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe GithubRelease, type: :model do
   let :github_repo do
-    GithubRepo.create user: 'foo', repo: 'bar'
+    GithubRepo.create user: 'foo', repo: 'bar',
+      tag_filter: '\Av(\d+.\d+.\d+)\z'
   end
 
   let :github_release do
@@ -33,6 +34,12 @@ describe GithubRelease, type: :model do
     expect { github_repo.github_releases << github_release }.to change {
       github_repo.updated_at
     }.from(old_updated_at)
+  end
+
+  it 'has a version' do
+    github_release.github_repo = github_repo
+    expect(github_release.version).to be_a Tins::StringVersion::Version
+    expect(github_release.version).to eq '6.6.6'.version
   end
 
   context 'Notify via JIRA' do

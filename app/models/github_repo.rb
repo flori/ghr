@@ -43,7 +43,7 @@ class GithubRepo < ApplicationRecord
   # Returns an array of version strings that match the tag_filter and are
   # associated with releases in this repository, sorted by the version numbers.
   def versions
-    github_releases&.map { _1.version(tag_filter) }&.compact&.sort
+    github_releases.map(&:version).compact.sort
   end
 
   # Reimports all releases for this repository from GitHub.

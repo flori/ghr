@@ -46,9 +46,7 @@ class ReposController < ApplicationController
       render status: :not_found
       return
     end
-    releases = github_repo.github_releases.sort_by do |release|
-      release.version(github_repo.tag_filter)
-    end.reverse
+    releases = github_repo.github_releases.sort_by(&:version).reverse
     respond_to do |format|
       format.atom do
         if releases.empty?

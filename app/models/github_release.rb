@@ -53,9 +53,19 @@ class GithubRelease < ApplicationRecord
     do_notify_via_email
   end
 
-  # @param tag_filter [String, Regexp] the tag filter to use for version matching
-  # @return [Tins::StringVersion::Version, nil] the parsed version object or nil if parsing failed
-  def version(tag_filter)
+  # Returns the version string for this GitHub release based on the provided
+  # tag filter.
+  #
+  # This method utilizes a TagFilter instance to extract and process the
+  # version information from the release's tag name, applying the specified tag
+  # filter to determine the relevant portion of the tag for version
+  # identification.
+  #
+  # @param tag_filter [String, Regexp] the tag filter to use for extracting
+  # version information
+  # @return [Tins::StringVersion::Version, NilClass] a version object if the
+  # tag matches the filter, or nil if no valid version could be extracted
+  def version(tag_filter = github_repo.tag_filter)
     TagFilter.new(tag_filter).version(tag_name)
   end
 

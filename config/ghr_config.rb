@@ -2,12 +2,11 @@ module GhrConfig
   include ConstConf
 
   description 'Root configuration module'
-
-  prefix 'GHR'
+  prefix      'GHR'
 
   REVISION = set do
     description 'Current software revision of GHR'
-    prefix ''
+    prefix      ''
     required { Rails.env.production? }
     check    { value.blank? || value.to_s =~ /\A\h{7}\z/ }
   end
@@ -41,7 +40,7 @@ module GhrConfig
 
   module SERVICE
     description 'Service settings'
-    prefix ''
+    prefix      ''
 
     REDIS_URL = set do
       description 'Redis server URL'
@@ -60,7 +59,7 @@ module GhrConfig
 
   module EMAIL
     description 'E-Mail Notifier plugin settings'
-    prefix 'EMAIL'
+    prefix      'EMAIL'
 
     ENABLED = set do
       description 'EMAIL plugin is enabled if set to "1", disabled if set to "0"'
@@ -86,7 +85,7 @@ module GhrConfig
 
   module JIRA
     description 'JIRA Notifier plugin settings'
-    prefix 'JIRA'
+    prefix      'JIRA'
 
     ENABLED = set do
       description 'JIRA plugin is enabled if set to "1", disabled if set to "0"'
@@ -132,7 +131,7 @@ module GhrConfig
 
   module RUBY
     description 'Ruby specificy configuration settings'
-    prefix 'RUBY'
+    prefix      'RUBY'
 
     YJIT_ENABLE = set do
       description 'Ruby YJIT is enabled with "1" (the default for everthing but tests)'
@@ -143,7 +142,7 @@ module GhrConfig
 
   module PUMA
     description 'Puma specific configuration settings'
-    prefix ''
+    prefix      ''
 
     PIDFILE = set do
       description 'Server PID file for Puma'
@@ -168,8 +167,7 @@ module GhrConfig
 
   module RAILS
     description 'Rails specific configuration settings'
-
-    prefix 'RAILS'
+    prefix      'RAILS'
 
     LOG_LEVEL = set do
       description 'Rails log level'
@@ -184,7 +182,7 @@ module GhrConfig
 
     CI = set do
       description 'We are running on CI if "true" or "1"'
-      prefix ''
+      prefix      ''
       decode { /\Atrue|1\z/i.match?(it) }
     end
   end

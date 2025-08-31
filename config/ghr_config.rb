@@ -187,7 +187,7 @@ module GhrConfig
     CI = set do
       description 'We are running on CI if "true" or "1"'
       prefix ''
-      decode { it =~ /\Atrue|1\z/i }
+      decode { /\Atrue|1\z/i.match?(it) }
     end
   end
 end

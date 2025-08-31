@@ -1,8 +1,6 @@
 module GhrConfig
   include ConstConf
 
-  plugin ConstConf::FilePlugin
-
   description 'Root configuration module'
 
   prefix 'GHR'

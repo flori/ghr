@@ -32,6 +32,6 @@ class NotificationMailer < ApplicationMailer
   private
 
   def notify_user
-    GHR::EMAIL::NOTIFY_USER
+    GhrConfig::EMAIL::NOTIFY_USER
   end
 end

@@ -10,13 +10,6 @@
 # methods to send notifications via their specific plugins (e.g., JIRA,
 # Slack, Email).
 module GithubReleaseNotifier
-  include Rails.application.routes.url_helpers
-
-  # @return [Hash] The default URL options configured for ActionMailer.
-  def default_url_options
-    Rails.configuration.action_mailer.default_url_options
-  end
-
   # @param [GithubRelease] github_release about which to eventually notify
   # about.
   def initialize(github_release:)
@@ -46,7 +39,8 @@ module GithubReleaseNotifier
   # @return [String] The URL pointing to your application's page for the
   # specific GitHub repository.
   def app_url
-    repo_url(@github_release.github_repo.to_param)
+    Rails.application.routes.url_helpers.
+      repo_url(@github_release.github_repo.to_param, default_url_options)
   end
 
   # @return [String] the description containing more information and a link to
@@ -60,5 +54,12 @@ module GithubReleaseNotifier
       "",
       "See the [ghr URL](#{app_url}) for more information about _#{repo}_ releases."
     ] * ?\n
+  end
+
+  private
+
+  # @return [Hash] The default URL options configured for ActionMailer.
+  def default_url_options
+    Rails.configuration.action_mailer.default_url_options
   end
 end

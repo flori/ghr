@@ -93,10 +93,10 @@ GEM
       tins
     concurrent-ruby (1.3.5)
     connection_pool (2.5.3)
-    const_conf (0.1.0)
+    const_conf (0.1.1)
+      activesupport (~> 8)
       complex_config (~> 0.22)
       json (~> 2.0)
-      rails (~> 8)
       tins (~> 1.42)
     crack (1.0.0)
       bigdecimal

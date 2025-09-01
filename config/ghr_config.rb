@@ -11,7 +11,7 @@ module GhrConfig
     check    { value.blank? || value.to_s =~ /\A\h{7}\z/ }
   end
 
-  SIMPLE_HOST_REGEX = /\A[a-z\-]+\.[a-z\-\.]+\z/
+  SIMPLE_HOST_REGEX = /\A[0-9a-z\-]+\.[0-9a-z\-\.]+\z/
 
   HOST = set do
     description 'HOST name the GHR-App can be reached under'
@@ -23,7 +23,7 @@ module GhrConfig
     description 'Connections under these hostnames are allowed in Rails.'
     default ''
     decode { it.split(?,).map(&:strip) }
-    check  { value.all? { |host| host == 'localhost' || host =~ SIMPLE_HOST_REGEX && host.size <= 253 } }
+    check  { value.all? { |host| host =~ SIMPLE_HOST_REGEX && host.size <= 253 } }
   end
 
   SCHEDULE_EVERY = set do

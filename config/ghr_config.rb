@@ -23,7 +23,7 @@ module GhrConfig
     description 'Connections under these hostnames are allowed in Rails.'
     default ''
     decode { it.split(?,).map(&:strip) }
-    check  { value.all? { |host| host =~ SIMPLE_HOST_REGEX && host.size <= 253 } }
+    check  { value.all? { |host| host == 'localhost' || host =~ SIMPLE_HOST_REGEX && host.size <= 253 } }
   end
 
   SCHEDULE_EVERY = set do

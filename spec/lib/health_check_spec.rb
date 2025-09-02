@@ -18,9 +18,8 @@ describe Rack::HealthCheck do
   it 'ingores /otherz' do
     env['REQUEST_PATH']       = '/otherz'
     expect(app).to receive(:call).with(env).and_return :next
-    status, headers, body = instance.call(env)
+    status, _headers, _body = instance.call(env)
     expect(status).to eq :next
-		expect(headers['Content-Type']).to eq 'application/json'
   end
 
   it 'handles /readyz' do
@@ -28,7 +27,8 @@ describe Rack::HealthCheck do
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)
     expect(status).to eq 200
-		expect(headers['Content-Type']).to eq 'application/json'
+    expect(headers['Content-Type']).to eq 'application/json'
+    expect(JSON(body.first)['status']).to eq 'ok'
   end
 
   it 'handles /livez' do
@@ -36,7 +36,8 @@ describe Rack::HealthCheck do
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)
     expect(status).to eq 200
-		expect(headers['Content-Type']).to eq 'application/json'
+    expect(headers['Content-Type']).to eq 'application/json'
+    expect(JSON(body.first)['status']).to eq 'ok'
   end
 
   it 'handles /livez for unavailable active record database connection' do
@@ -46,6 +47,7 @@ describe Rack::HealthCheck do
       and_raise StandardError
     status, headers, body = instance.call(env)
     expect(status).to eq 503
-		expect(headers['Content-Type']).to eq 'application/json'
+    expect(headers['Content-Type']).to eq 'application/json'
+    expect(JSON(body.first)['status']).to eq 'nok'
   end
 end

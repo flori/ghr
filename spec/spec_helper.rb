@@ -127,5 +127,8 @@ RSpec.configure do |config|
 
   RSpec.configure do |config|
     config.around(&ProtectEnvVars.apply)
+    config.before(:each, type: :request) do
+      host! "ghr.localhost"
+    end
   end
 end

@@ -34,7 +34,7 @@ describe GithubReleaseJIRANotifier, type: :model do
     )
     expect(JIRAClient).to receive(:issue!).with(
       summary: "New release foo/bar v1.2.3: The numbers release",
-      description: "See the [github release page](https://foo.bar.com/blubs) for **v1.2.3** here,\nPublished at _2011-11-11T11:11:11+00:00_\n\nfoo body\n\nSee the [ghr URL](http://example.com/repos/foo:bar) for more information about _foo/bar_ releases."
+      description: "See the [github release page](https://foo.bar.com/blubs) for **v1.2.3** here,\nPublished at _2011-11-11T11:11:11+00:00_\n\nfoo body\n\nSee the [ghr URL](http://ghr.localhost/repos/foo:bar) for more information about _foo/bar_ releases."
     )
     expect {
       described_class.new(github_release:).perform

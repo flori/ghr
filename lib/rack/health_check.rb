@@ -37,6 +37,19 @@ module Rack
 
     private
 
+    # Establishes a database connection for the current Rails environment.
+    #
+    # This method creates and leases a connection to the database configured
+    # for the current Rails environment. It uses the
+    # ActiveRecord::Base.establish_connection method with the environment
+    # symbol and then leases the resulting connection.
+    #
+    # @return [ActiveRecord::ConnectionAdapters::ConnectionPool] a leased connection
+    #   to the database for the current Rails environment
+    def connection
+      ActiveRecord::Base.establish_connection(Rails.env.to_sym).lease_connection
+    end
+
     # Indicates the liveness of the application by checking if the database
     # connection is established
     #
@@ -94,7 +107,7 @@ module Rack
     # @return [TrueClass, FalseClass] true if the database connection is alive,
     # false otherwise
     def check_if_active_record_connection_alive
-      1 == ActiveRecord::Base.connection.select_value(%{ SELECT 1 })
+      1 == connection.select_value(%{ SELECT 1 })
     end
   end
 end

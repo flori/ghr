@@ -25,7 +25,7 @@ describe NotificationMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("The Summary")
       expect(mail.to).to eq([mail_to])
-      expect(mail.from).to eq(["noreply@example.com"])
+      expect(mail.from).to eq(["noreply@ghr.localhost"])
     end
 
     it "renders the body" do

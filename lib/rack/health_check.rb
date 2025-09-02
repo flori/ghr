@@ -37,17 +37,24 @@ module Rack
 
     private
 
-    # Establishes a database connection for the current Rails environment.
+    # Establishes a database connection for the current class and executes the
+    # given block within that connection context.
     #
-    # This method creates and leases a connection to the database configured
-    # for the current Rails environment. It uses the
-    # ActiveRecord::Base.establish_connection method with the environment
-    # symbol and then leases the resulting connection.
+    # This method sets up a connection pool using ActiveRecord's connection
+    # handler with the default environment, ensuring that the provided block is
+    # executed within the context of this established connection. After the
+    # block execution completes, it cleans up by removing the connection pool
+    # associated with the class name.
     #
-    # @return [ActiveRecord::ConnectionAdapters::ConnectionPool] a leased connection
-    #   to the database for the current Rails environment
-    def connection
-      ActiveRecord::Base.establish_connection(Rails.env.to_sym).lease_connection
+    # @param block [Proc] the block to execute within the database connection context
+    # @return [Object] the return value of the executed block
+    def with_connection(&block)
+      default_env = ActiveRecord::ConnectionHandling::DEFAULT_ENV.call.to_sym
+      pool = ActiveRecord::Base.connection_handler.establish_connection(default_env, owner_name: self.class.name)
+
+      pool.with_connection(&block)
+    ensure
+      ActiveRecord::Base.connection_handler.remove_connection_pool(self.class.name)
     end
 
     # Indicates the liveness of the application by checking if the database
@@ -107,7 +114,7 @@ module Rack
     # @return [TrueClass, FalseClass] true if the database connection is alive,
     # false otherwise
     def check_if_active_record_connection_alive
-      1 == connection.select_value(%{ SELECT 1 })
+      1 == with_connection { it.select_value(%{ SELECT 1 }) }
     end
   end
 end

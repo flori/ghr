@@ -42,7 +42,10 @@ module Ghr
     config.active_record.query_log_tags_format = :sqlcommenter
     config.active_record.query_log_tags = [ :application, :controller, :action, :job ]
 
-    GhrConfig::HOSTS_ALLOWED.each { config.hosts << it }
+		if hosts = GhrConfig::HOSTS_ALLOWED?
+			STDERR.puts "Configuring hosts allowed: #{hosts * ', '}"
+			hosts.each { config.hosts << it }
+		end
 
     if url = GhrConfig::EMAIL::NOTIFY_SMTP_URL?
       # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.

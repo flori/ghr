@@ -8,12 +8,14 @@ services:
       POSTGRES_PASSWORD: secret
   web:
     platform: $ARCH
+    hostname: ghr.localhost
     image: ghr-web
     volumes:
       - .:/app
     environment:
       GHR_GITHUB_PERSONAL_ACCESS_TOKEN: ${GHR_GITHUB_PERSONAL_ACCESS_TOKEN}
       GHR_HOST:                         ${GHR_HOST}
+      GHR_HOSTS_ALLOWED:                ${GHR_HOSTS_ALLOWED:-ghr.localhost}
       GHR_SCHEDULE_EVERY:               "1h"
       RUBY_YJIT_ENABLE:                 "1"
       EMAIL_ENABLED:                    ${EMAIL_ENABLED}
@@ -30,5 +32,11 @@ services:
       - "127.0.0.1:8123:3000"
     depends_on:
       - db
+    healthcheck:
+      test: [ "CMD", "ruby", "-e", "require 'net/http'; require 'json'; Net::HTTP.get_response(URI('http://ghr.localhost:3000/livez')).then { it.code == '200' && JSON(it.body)['status'] == 'ok' } or exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 volumes:
   postgresql-data:

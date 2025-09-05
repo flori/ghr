@@ -37,6 +37,7 @@
 /doc
 /.env
 /tags
+/cscope.out
 /backup/*
 
 /TODO*

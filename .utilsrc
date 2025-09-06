@@ -2,7 +2,7 @@
 
 search do
   prune_dirs /\A(\.svn|\.git|\.terraform|CVS|tmp|coverage|corpus|pkg|\.yardoc|doc)\z/
-  skip_files /(\A\.|\.sw[pon]\z|\.(log|fnm|jpg|jpeg|png|pdf|svg)\z|\Atags\z|~\z)/i
+  skip_files /(\A\.|\.sw[pon]\z|\.(log|fnm|jpg|jpeg|png|pdf|svg)\z|\A(tags|cscope\.out)\z|~\z)/i
 end
 
 discover do

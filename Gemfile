@@ -13,7 +13,6 @@ gem "tins", require: "tins/xt"
 gem 'atom-tools'
 gem 'awesome_print'
 gem 'brakeman'
-gem 'complex_config'
 gem 'degu'
 gem 'excon'
 gem 'faraday-retry'

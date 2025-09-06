@@ -56,6 +56,12 @@ code_indexer do
     rack
     rack-session
     rack-test
+    rspec-collection_matchers
+    rspec-core
+    rspec-expectations
+    rspec-mocks
+    rspec-rails
+    rspec-support
     rufus-scheduler
     stringio
     term-ansicolor

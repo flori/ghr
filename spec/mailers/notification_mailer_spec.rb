@@ -31,5 +31,9 @@ describe NotificationMailer, type: :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to include("<p><strong>The Description</strong></p>")
     end
+
+    it 'knows which user to notify' do
+      expect(NotificationMailer.new.send(:notify_user)).to eq 'test@example.com'
+    end
   end
 end

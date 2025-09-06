@@ -15,9 +15,6 @@
 #   # Create an issue
 #   issue = JIRAClient.issue!(summary: 'Bug Report', description: 'Issue description')
 module JIRAClient
-  include ComplexConfig::Provider::Shortcuts
-  extend ComplexConfig::Provider::Shortcuts
-
   module_function
 
   # Connects to the JIRA API and returns the client instance.

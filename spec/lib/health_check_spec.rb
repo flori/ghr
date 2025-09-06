@@ -15,7 +15,7 @@ describe Rack::HealthCheck do
     described_class.new(app)
   end
 
-  it 'ingores /otherz' do
+  it 'ignores /otherz' do
     env['REQUEST_PATH']       = '/otherz'
     expect(app).to receive(:call).with(env).and_return :next
     status, _headers, _body = instance.call(env)
@@ -49,5 +49,29 @@ describe Rack::HealthCheck do
     expect(status).to eq 503
     expect(headers['Content-Type']).to eq 'application/json'
     expect(JSON(body.first)['status']).to eq 'nok'
+  end
+
+  it 'reports /revisionz if configured' do
+    env['REQUEST_PATH']       = '/revisionz'
+    expect(GhrConfig).to receive(:REVISION?).and_return 'deadbee'
+    expect(app).not_to receive(:call).with(env)
+    status, headers, body = instance.call(env)
+    expect(status).to eq 200
+    expect(headers['Content-Type']).to eq 'application/json'
+    data = JSON(body.first)
+    expect(data['status']).to eq 'ok'
+    expect(data['revision']).to eq 'deadbee'
+  end
+
+  it 'does not report /revisionz if not configured' do
+    env['REQUEST_PATH']       = '/revisionz'
+    expect(GhrConfig).to receive(:REVISION?).and_return nil
+    expect(app).not_to receive(:call).with(env)
+    status, headers, body = instance.call(env)
+    expect(status).to eq 200
+    expect(headers['Content-Type']).to eq 'application/json'
+    data = JSON(body.first)
+    expect(data['status']).to eq 'nok'
+    expect(data['revision']).to eq 'n/a'
   end
 end

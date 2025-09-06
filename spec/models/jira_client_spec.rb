@@ -1,13 +1,22 @@
 require 'rails_helper'
 
 describe JIRAClient, type: :model do
-  let :jira_client do
-    double('JIRA::Client')
-  end
-
   before do
     described_class.disconnect
-    allow(JIRA::Client).to receive(:new).and_return jira_client
+    stub_const('GhrConfig::JIRA::URL', 'http://test.atlassian.net:443/')
+    stub_const('GhrConfig::JIRA::USERNAME', 'testuser')
+    stub_const('GhrConfig::JIRA::API_TOKEN', 'testpassword')
+  end
+
+  let :jira_client do
+    described_class.connect
+  end
+
+  it 'can connect' do
+    expect(jira_client).to be_a JIRA::Client
+    expect(jira_client.options[:site]).to eq 'http://test.atlassian.net:443/'
+    expect(jira_client.options[:username]).to eq 'testuser'
+    expect(jira_client.options[:password]).to eq 'testpassword'
   end
 
   it 'can connect' do
@@ -29,7 +38,9 @@ describe JIRAClient, type: :model do
   it 'can reconnect' do
     expect(described_class.connect).to eq jira_client
     expect(described_class).to receive(:disconnect).and_call_original
-    expect(described_class.reconnect).to eq jira_client
+    new_jira_client = described_class.reconnect
+    expect(new_jira_client).to be_a JIRA::Client
+    expect(new_jira_client).not_to eq jira_client
   end
 
   it 'can find our main project' do

@@ -12,6 +12,11 @@ describe JIRAClient, type: :model do
     described_class.connect
   end
 
+  it 'can be configured' do
+    expect(GhrConfig::JIRA).to receive(:ENABLED?).and_return true
+    expect(described_class).to be_configured
+  end
+
   it 'can connect' do
     expect(jira_client).to be_a JIRA::Client
     expect(jira_client.options[:site]).to eq 'http://test.atlassian.net:443/'

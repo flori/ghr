@@ -63,6 +63,9 @@ describe GithubRepo, type: :model do
       expect(repo.to_s).to eq(
         'user: foo, repo: bar, releases: 0, last_release: n/a'
       )
+      expect(repo.inspect).to eq(
+        '#<GithubRepo: user: foo, repo: bar, releases: 0, last_release: n/a>'
+      )
     end
 
     it 'can be represented as a string with some releases' do
@@ -89,6 +92,9 @@ describe GithubRepo, type: :model do
         )
       expect(repo.to_s).to eq(
         'user: foo, repo: bar, releases: 2, last_release: 6.6.6'
+      )
+      expect(repo.inspect).to eq(
+        '#<GithubRepo: user: foo, repo: bar, releases: 2, last_release: 6.6.6>'
       )
     end
   end

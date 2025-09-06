@@ -42,6 +42,18 @@ describe GithubRelease, type: :model do
     expect(github_release.version).to eq '6.6.6'.version
   end
 
+  context 'Representation' do
+    it 'can be represented as a string' do
+      github_release.github_repo = github_repo
+      expect(github_release.to_s).to eq(
+        "repo: , version: 6.6.6, published_at: 2011-11-11T11:11:11Z"
+      )
+      expect(github_release.inspect).to eq(
+        "#<GithubRelease: repo: , version: 6.6.6, published_at: 2011-11-11T11:11:11Z>"
+      )
+    end
+  end
+
   context 'Notify via JIRA' do
     before do
       github_repo.github_releases << github_release

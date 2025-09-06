@@ -65,8 +65,10 @@ class GithubRelease < ApplicationRecord
   # version information
   # @return [Tins::StringVersion::Version, NilClass] a version object if the
   # tag matches the filter, or nil if no valid version could be extracted
-  def version(tag_filter = github_repo.tag_filter)
-    TagFilter.new(tag_filter).version(tag_name)
+  def version(tag_filter = github_repo&.tag_filter)
+    if tag_filter
+      TagFilter.new(tag_filter).version(tag_name)
+    end
   end
 
   # Returns a string representation of the GitHub release

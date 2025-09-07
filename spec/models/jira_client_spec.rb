@@ -17,7 +17,7 @@ describe JIRAClient, type: :model do
     expect(described_class).to be_configured
   end
 
-  it 'can connect' do
+  it 'has correct configuration' do
     expect(jira_client).to be_a JIRA::Client
     expect(jira_client.options[:site]).to eq 'http://test.atlassian.net:443/'
     expect(jira_client.options[:username]).to eq 'testuser'

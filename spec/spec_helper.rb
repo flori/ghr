@@ -125,7 +125,10 @@ RSpec.configure do |config|
     end
   end
 
+  require 'const_conf/spec'
+
   RSpec.configure do |config|
+    config.include(ConstConf::ConstConfHelper)
     config.around(&ProtectEnvVars.apply)
     config.before(:each, type: :request) do
       host! "ghr.localhost"

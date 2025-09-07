@@ -23,7 +23,7 @@ gem 'kramdown-parser-gfm'
 gem 'ostruct'
 gem 'term-ansicolor'
 gem 'yard'
-gem 'const_conf'
+gem 'const_conf', '~> 0.2'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.0"

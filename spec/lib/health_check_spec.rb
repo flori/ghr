@@ -53,7 +53,7 @@ describe Rack::HealthCheck do
 
   it 'reports /revisionz if configured' do
     env['REQUEST_PATH']       = '/revisionz'
-    expect(GhrConfig).to receive(:REVISION?).and_return 'deadbee'
+    const_conf_as('GhrConfig::REVISION'  => 'deadbee')
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)
     expect(status).to eq 200
@@ -65,7 +65,7 @@ describe Rack::HealthCheck do
 
   it 'does not report /revisionz if not configured' do
     env['REQUEST_PATH']       = '/revisionz'
-    expect(GhrConfig).to receive(:REVISION?).and_return nil
+    const_conf_as('GhrConfig::REVISION'  => nil)
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)
     expect(status).to eq 200

@@ -3,9 +3,12 @@ require 'rails_helper'
 describe JIRAClient, type: :model do
   before do
     described_class.disconnect
-    stub_const('GhrConfig::JIRA::URL', 'http://test.atlassian.net:443/')
-    stub_const('GhrConfig::JIRA::USERNAME', 'testuser')
-    stub_const('GhrConfig::JIRA::API_TOKEN', 'testpassword')
+    const_conf_as(
+      'GhrConfig::JIRA::URL'       => 'http://test.atlassian.net:443/',
+      'GhrConfig::JIRA::USERNAME'  => 'testuser',
+      'GhrConfig::JIRA::API_TOKEN' => 'testpassword',
+      'GhrConfig::JIRA::ENABLED'   => true,
+    )
   end
 
   let :jira_client do
@@ -13,7 +16,6 @@ describe JIRAClient, type: :model do
   end
 
   it 'can be configured' do
-    expect(GhrConfig::JIRA).to receive(:ENABLED?).and_return true
     expect(described_class).to be_configured
   end
 
@@ -49,8 +51,9 @@ describe JIRAClient, type: :model do
   end
 
   it 'can find our main project' do
+    const_conf_as('GhrConfig::JIRA::PROJECT' => 'FOO')
     project = double('Project')
-    expect(project).to receive(:find).with(GhrConfig::JIRA::PROJECT).and_return project
+    expect(project).to receive(:find).with('FOO').and_return project
     expect(jira_client).to receive(:Project).and_return project
     expect(described_class.project).to eq project
   end

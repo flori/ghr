@@ -17,7 +17,7 @@ strip_spaces do
 end
 
 probe do
-  test_framework :'test-unit'
+  test_framework :'rspec'
 end
 
 ssh_tunnel do

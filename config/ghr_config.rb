@@ -65,7 +65,7 @@ module GhrConfig
       description 'EMAIL plugin is enabled if set to "1", disabled if set to "0"'
       activated :itself
       decode    -> value { value == "1" }
-      default   { '0' }
+      default   '0'
       required true
     end
 
@@ -91,7 +91,7 @@ module GhrConfig
       description 'JIRA plugin is enabled if set to "1", disabled if set to "0"'
       activated :itself
       decode    -> value { value == "1" }
-      default   { '0' }
+      default   '0'
       required  true
     end
 

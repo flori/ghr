@@ -103,8 +103,6 @@ RSpec.configure do |config|
 =end
 
   config.before(:suite) do
-    ENV['GHR_GITHUB_PERSONAL_ACCESS_TOKEN'] = 'ghp_jii4VITttwjnT14J2TydtaDArD1GUYFiZMJq' # fake it
-    ConstConf.reload
     WebMock.disable_net_connect!
   end
 
@@ -128,8 +126,13 @@ RSpec.configure do |config|
   require 'const_conf/spec'
 
   RSpec.configure do |config|
-    config.include(ConstConf::ConstConfHelper)
     config.around(&ProtectEnvVars.apply)
+    config.include(ConstConf::ConstConfHelper)
+    config.before(:each) do
+      const_conf_as(
+        'GhrConfig::GITHUB_PERSONAL_ACCESS_TOKEN' => 'ghp_jii4VITttwjnT14J2TydtaDArD1GUYFiZMJq' # fake it
+      )
+    end
     config.before(:each, type: :request) do
       host! "ghr.localhost"
     end

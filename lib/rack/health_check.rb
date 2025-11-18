@@ -1,4 +1,9 @@
 module Rack
+  # This class provides middleware for Rack applications that handles health check endpoints.
+  # It responds to requests at /livez, /readyz, and /revisionz with appropriate JSON responses
+  # indicating the application's health status. The middleware checks if the application is
+  # ready to serve requests, whether it's alive, and can optionally report the current
+  # software revision if configured.
   class HealthCheck
     # Initializes a new instance with the given application object.
     #

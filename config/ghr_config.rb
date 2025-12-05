@@ -185,5 +185,12 @@ module GhrConfig
       prefix      ''
       decode { /\Atrue|1\z/i.match?(it) }
     end
+
+    SECRET_KEY_BASE = set do
+      description "The Rails random string used for cryptographic security"
+      prefix ''
+      required  { Rails.env.production? }
+      sensitive true
+    end
   end
 end

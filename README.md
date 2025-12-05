@@ -24,7 +24,7 @@ to eventually update to the new release if appropriate or necessary.
 These variables must be configured for the application to function:
 
 - `GHR_GITHUB_PERSONAL_ACCESS_TOKEN` - A GitHub API token with `public_repo` scope
-- `SECRET_KEY_BASE` - The Rails' `SECRET_KEY_BASE` random string used for cryptographic security
+- `SECRET_KEY_BASE` - The Rails `SECRET_KEY_BASE` random string used for cryptographic security
 - `DATABASE_URL` - Your database URL, e.g. `postgresql://user:password@dbhost:5432/ghr_production`
 
 ### Optional Environment Variables with Defaults

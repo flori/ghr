@@ -23,15 +23,15 @@ validate-tag:
 	fi # '
 
 release: check-TAG validate-tag
-	git push origin master
 	git tag "$(TAG)"
 	git push origin "$(TAG)"
+	git push origin master
 
 push: check-TAG build
 	docker tag "ghr:$(REVISION)" "flori303/ghr:$(TAG)"
 	docker push "flori303/ghr:$(TAG)"
 
-build-info: check-TAG
+build-info: check-TAG validate-tag
 	@echo "flori303/ghr:$(TAG)"
 
 grype: build-web

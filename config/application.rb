@@ -32,16 +32,31 @@ module Ghr
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Specifies whether `to_time` methods preserve the UTC offset of their receivers or preserves the timezone.
+    # Specifies whether `to_time` methods preserve the UTC offset of their
+    # receivers or preserves the timezone.
+    #
     # If set to `:zone`, `to_time` methods will use the timezone of their receivers.
     # If set to `:offset`, `to_time` methods will use the UTC offset.
     # If `false`, `to_time` methods will convert to the local system UTC offset instead.
     config.active_support.to_time_preserves_timezone = :zone
 
+    # Enable query logging with tags
     config.active_record.query_log_tags_enabled = true
+
+    # # Set the format for query log tags to SQL comment style
     config.active_record.query_log_tags_format = :sqlcommenter
+
+    # Specify which tags to include in query logs (application, controller,
+    # action, job) These tags help identify the source and context of database
+    # queries for debugging and monitoring
     config.active_record.query_log_tags = [ :application, :controller, :action, :job ]
 
+    # Disables ActiveStorage's automatic image variant processing
+    config.active_storage.variant_processor = :disabled
+
+    # Set up a whitelist of allowed hostnames to prevent HTTP Host header
+    # injection attacks by validating that incoming requests come from trusted
+    # domains.
     if hosts = GhrConfig::HOSTS_ALLOWED?
       STDOUT.puts "Configuring hosts allowed: #{hosts * ', '}"
       hosts.each { config.hosts << it }

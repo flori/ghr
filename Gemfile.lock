@@ -373,6 +373,7 @@ PLATFORMS
   aarch64-linux-musl
   x86-linux-musl
   x86_64-darwin-22
+  x86_64-darwin-24
   x86_64-linux
   x86_64-linux-musl
 

@@ -16,14 +16,14 @@ describe Rack::HealthCheck do
   end
 
   it 'ignores /otherz' do
-    env['REQUEST_PATH']       = '/otherz'
+    env['PATH_INFO']       = '/otherz'
     expect(app).to receive(:call).with(env).and_return :next
     status, _headers, _body = instance.call(env)
     expect(status).to eq :next
   end
 
   it 'handles /readyz' do
-    env['REQUEST_PATH']       = '/readyz'
+    env['PATH_INFO']       = '/readyz'
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)
     expect(status).to eq 200
@@ -32,7 +32,7 @@ describe Rack::HealthCheck do
   end
 
   it 'handles /livez' do
-    env['REQUEST_PATH']       = '/livez'
+    env['PATH_INFO']       = '/livez'
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)
     expect(status).to eq 200
@@ -41,7 +41,7 @@ describe Rack::HealthCheck do
   end
 
   it 'handles /livez for unavailable active record database connection' do
-    env['REQUEST_PATH']       = '/livez'
+    env['PATH_INFO']       = '/livez'
     expect(app).not_to receive(:call).with(env)
     expect(instance).to receive(:check_if_active_record_connection_alive).
       and_raise StandardError
@@ -52,7 +52,7 @@ describe Rack::HealthCheck do
   end
 
   it 'reports /revisionz if configured' do
-    env['REQUEST_PATH']       = '/revisionz'
+    env['PATH_INFO']       = '/revisionz'
     const_conf_as('GhrConfig::REVISION'  => 'deadbee')
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)
@@ -64,7 +64,7 @@ describe Rack::HealthCheck do
   end
 
   it 'does not report /revisionz if not configured' do
-    env['REQUEST_PATH']       = '/revisionz'
+    env['PATH_INFO']       = '/revisionz'
     const_conf_as('GhrConfig::REVISION'  => nil)
     expect(app).not_to receive(:call).with(env)
     status, headers, body = instance.call(env)

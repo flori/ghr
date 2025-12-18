@@ -1,3 +1,6 @@
+# Namespace of Rack application middleware framework
+#
+# Rack is a minimal interface between web servers and Ruby web applications.
 module Rack
   # This class provides middleware for Rack applications that handles health check endpoints.
   # It responds to requests at /livez, /readyz, and /revisionz with appropriate JSON responses
@@ -25,8 +28,8 @@ module Rack
     # @param env [Hash] the Rack environment hash containing request details
     # @return [Array] a Rack response array consisting of status code, headers, and body
     def call(env)
-      request_path = env['REQUEST_PATH']
-      if request_path =~ %r'\A/(readyz|livez|revisionz)\z'
+      path_info = env['PATH_INFO']
+      if path_info =~ %r'\A/(readyz|livez|revisionz)\z'
         begin
           response = send($1)
         rescue => e

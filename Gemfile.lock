@@ -88,14 +88,14 @@ GEM
     brakeman (7.1.1)
       racc
     builder (3.3.0)
-    complex_config (0.24.0)
+    complex_config (0.25.0)
       base64
       json
       mize (~> 0.6)
       tins (~> 1)
     concurrent-ruby (1.3.6)
     connection_pool (3.0.2)
-    const_conf (0.4.3)
+    const_conf (0.5.0)
       activesupport (~> 8)
       complex_config (~> 0.23)
       json (~> 2.0)
@@ -105,7 +105,7 @@ GEM
       rexml
     crass (1.0.6)
     date (3.5.1)
-    debug (1.11.0)
+    debug (1.11.1)
       irb (~> 1.10)
       reline (>= 0.3.8)
     degu (0.9.1)
@@ -130,17 +130,16 @@ GEM
     fugit (1.12.1)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
-    gem_hadar (2.8.0)
+    gem_hadar (2.13.1)
       erb
       fileutils
+      infobar (~> 0.11)
       json (~> 2.0)
       mize
       net-http
-      ollama-ruby (~> 1.7)
+      ollama-ruby (~> 1.17)
       openssl (>= 3.3.1)
-      pathname
       rake
-      set
       term-ansicolor (~> 1.0)
       tins (~> 1.0)
       uri
@@ -149,9 +148,9 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.2.1)
     hashie (5.0.0)
-    i18n (1.14.7)
+    i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    infobar (0.11.0)
+    infobar (0.12.0)
       complex_config (~> 0.22)
       more_math
       term-ansicolor (~> 1.11)
@@ -171,7 +170,7 @@ GEM
       base64
     kramdown (2.5.1)
       rexml (>= 3.3.9)
-    kramdown-ansi (0.3.0)
+    kramdown-ansi (0.4.0)
       json (~> 2.0)
       kramdown-parser-gfm (~> 1.1)
       term-ansicolor (~> 1.11)
@@ -194,7 +193,7 @@ GEM
     minitest (6.0.0)
       prism (~> 1.5)
     mize (0.6.1)
-    more_math (1.6.0)
+    more_math (1.7.0)
       mize
       tins (~> 1)
     msgpack (1.8.0)
@@ -228,7 +227,7 @@ GEM
     octokit (10.0.0)
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
-    ollama-ruby (1.16.0)
+    ollama-ruby (1.18.0)
       excon (~> 1.0)
       infobar (~> 0.8)
       json (~> 2.0)
@@ -240,7 +239,6 @@ GEM
       tins (~> 1)
     openssl (4.0.0)
     ostruct (0.6.3)
-    pathname (0.4.0)
     pg (1.6.2)
     pg (1.6.2-aarch64-linux-musl)
     pg (1.6.2-x86_64-darwin)
@@ -249,7 +247,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.6.0)
+    prism (1.7.0)
     psych (5.3.1)
       date
       stringio
@@ -297,10 +295,12 @@ GEM
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
     rake (13.3.1)
-    rdoc (6.17.0)
+    rdoc (7.0.2)
       erb
       psych (>= 4.0.0)
       tsort
+    readline (0.0.4)
+      reline
     reline (0.6.3)
       io-console (~> 0.5)
     rexml (3.4.4)
@@ -329,7 +329,6 @@ GEM
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
     securerandom (0.4.1)
-    set (1.1.2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -347,9 +346,10 @@ GEM
       unicode-display_width (>= 1.1.1, < 3)
     thor (1.4.0)
     timeout (0.6.0)
-    tins (1.48.0)
+    tins (1.51.0)
       bigdecimal
       mize (~> 0.6)
+      readline
       sync
     tsort (0.2.0)
     tzinfo (2.0.6)

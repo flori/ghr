@@ -1,4 +1,4 @@
 #!/bin/sh
 
-CMD="${1:-bundle update}"
+CMD="${1:-bundle update --all}"
 exec docker run -v "$(pwd):/app" --name ghr-update --rm -it ghr-builder $CMD

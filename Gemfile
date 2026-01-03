@@ -4,27 +4,28 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0"
+gem "cgi" # ruby 4+ needs this
 
 gem "octokit"
 gem "pg"
 gem "rufus-scheduler"
 gem "simplecov"
 gem "tins", require: "tins/xt"
-gem 'atom-tools'
-gem 'awesome_print'
-gem 'brakeman'
-gem 'degu'
-gem 'excon'
-gem 'faraday-retry'
-gem 'jira-ruby', '~> 2.0'
-gem 'json'
-gem 'openssl', '>= 3.3.1'
-gem 'kramdown'
-gem 'kramdown-parser-gfm'
-gem 'ostruct'
-gem 'term-ansicolor'
-gem 'yard'
-gem 'const_conf', '~> 0.2'
+gem "atom-tools"
+gem "awesome_print"
+gem "brakeman"
+gem "degu"
+gem "excon"
+gem "faraday-retry"
+gem "jira-ruby", "~> 2.0"
+gem "json"
+gem "openssl", ">= 3.3.1"
+gem "kramdown"
+gem "kramdown-parser-gfm"
+gem "ostruct"
+gem "term-ansicolor"
+gem "yard"
+gem "const_conf", "~> 0.2"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.0"

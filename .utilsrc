@@ -18,6 +18,7 @@ end
 
 probe do
   test_framework :'rspec'
+  server_url 'tcp://localhost:59999'
 end
 
 ssh_tunnel do

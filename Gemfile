@@ -60,6 +60,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
   gem 'gem_hadar', '~> 2.2', require: false
+  gem 'utils'
 end
 
 group :test do

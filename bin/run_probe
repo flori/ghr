@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec docker compose run -p '127.0.0.1:59999:59999' --rm web probe -l -s 'tcp://0.0.0.0:59999'

@@ -32,14 +32,6 @@ module Ghr
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Specifies whether `to_time` methods preserve the UTC offset of their
-    # receivers or preserves the timezone.
-    #
-    # If set to `:zone`, `to_time` methods will use the timezone of their receivers.
-    # If set to `:offset`, `to_time` methods will use the UTC offset.
-    # If `false`, `to_time` methods will convert to the local system UTC offset instead.
-    config.active_support.to_time_preserves_timezone = :zone
-
     # Enable query logging with tags
     config.active_record.query_log_tags_enabled = true
 

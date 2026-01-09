@@ -10,34 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_25_004454) do
+ActiveRecord::Schema[8.1].define(version: 2025_07_25_004454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "github_releases", force: :cascade do |t|
-    t.bigint "github_repo_id", null: false
-    t.string "url", null: false
-    t.string "html_url", null: false
-    t.string "name", null: false
-    t.string "tag_name", null: false
-    t.datetime "published_at", null: false
     t.text "body"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "github_repo_id", null: false
+    t.string "html_url", null: false
+    t.string "name", null: false
     t.integer "pending_notifiers_bitfield", default: 0, null: false
+    t.datetime "published_at", null: false
+    t.string "tag_name", null: false
+    t.datetime "updated_at", null: false
+    t.string "url", null: false
     t.index ["github_repo_id"], name: "index_github_releases_on_github_repo_id"
   end
 
   create_table "github_repos", force: :cascade do |t|
-    t.string "user", null: false
-    t.string "repo", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "tag_filter", default: "", null: false
-    t.boolean "lightweight", default: false, null: false
-    t.boolean "import_enabled", default: true, null: false
-    t.string "version_requirement", default: [], array: true
     t.integer "configured_notifiers_bitfield", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.boolean "import_enabled", default: true, null: false
+    t.boolean "lightweight", default: false, null: false
+    t.string "repo", null: false
+    t.string "tag_filter", default: "", null: false
+    t.datetime "updated_at", null: false
+    t.string "user", null: false
+    t.string "version_requirement", default: [], array: true
     t.index ["user", "repo"], name: "index_github_repos_on_user_and_repo", unique: true
   end
 end

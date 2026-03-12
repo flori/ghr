@@ -57,14 +57,18 @@ class GithubRepo < ApplicationRecord
 
   # Returns a string representation of this GithubRepo instance
   #
-  # @return [ String ] A string in the format "user: foo, repo: bar, releases: 66, last_release: v1.2.3
+  # @return [ String ] A string in the format
+  #   "user: foo, repo: bar, releases: 66, last_release: v1.2.3, version_requirement: >1.2"
   def to_s
     releases     = versions
-    last_release = releases&.last
+    last_release = releases&.last || 'n/a'
     {
-      user:, repo:, releases: releases&.size.to_i,
-      last_release: last_release || 'n/a'
-    }.map { "%s: %s" % _1.flatten } * ', '
+      user:                ,
+      repo:                ,
+      releases:            releases&.size.to_i,
+      last_release:        ,
+      version_requirement: Array(version_requirement).join(', ').full?,
+    }.compact.map { "%s: %s" % _1.flatten } * ', '
   end
 
   # Returns a string representation of this GithubRepo instance

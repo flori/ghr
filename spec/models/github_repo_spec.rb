@@ -68,6 +68,16 @@ describe GithubRepo, type: :model do
       )
     end
 
+    it 'can be represented as a string with no releases and version_requirement' do
+      repo = GithubRepo.create user: 'foo', repo: 'bar', version_requirement: %w[ >=1.2.3 <3 ]
+      expect(repo.to_s).to eq(
+        'user: foo, repo: bar, releases: 0, last_release: n/a, version_requirement: >=1.2.3, <3'
+      )
+      expect(repo.inspect).to eq(
+        '#<GithubRepo: user: foo, repo: bar, releases: 0, last_release: n/a, version_requirement: >=1.2.3, <3>'
+      )
+    end
+
     it 'can be represented as a string with some releases' do
       repo = GithubRepo.build(
         user: 'foo', repo: 'bar', tag_filter: "\\Av(\\d+.\\d+.\\d+)\\z"

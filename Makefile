@@ -27,6 +27,10 @@ release: check-TAG validate-tag
 	git push origin "$(TAG)"
 	git push origin master
 
+last-tag:
+	@git fetch --tags
+	@git tag | sort -V | tail -n 1
+
 push: check-TAG build
 	docker tag "ghr:$(REVISION)" "flori303/ghr:$(TAG)"
 	docker push "flori303/ghr:$(TAG)"

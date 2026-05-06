@@ -59,7 +59,7 @@ describe JIRAClient, type: :model do
   end
 
   it 'can register a new issue' do
-    issue = double('Issue', build: double(save: true))
+    issue = double('Issue', build: double(save!: true))
     expect(jira_client).to receive(:Issue).and_return issue
     described_class.issue!(summary: 'foo', description: 'bar')
   end

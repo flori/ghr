@@ -81,7 +81,7 @@ module JIRAClient
       fields |= { components: [ { name: } ] }
     end
     object = connect.Issue.build
-    object.save(fields:)
+    object.save!(fields:)
     object
   end
 end

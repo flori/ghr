@@ -73,7 +73,7 @@ module JIRAClient
     fields = {
       project: { key: GhrConfig::JIRA::PROJECT },
       labels: GhrConfig::JIRA::LABELS,
-      issuetype: { id: 10007 }, # key is "Type"
+      issuetype: { id: GhrConfig::JIRA::ISSUETYPE_ID }, # key is "Type"
       summary:,
       description:,
     }

@@ -115,6 +115,12 @@ module GhrConfig
       required { JIRA::ENABLED? }
     end
 
+    ISSUETYPE_ID = set do
+      description 'JIRA Issue Type ID'
+      default '10007'
+      decode(&:to_i)
+    end
+
     LABELS = set do
       description 'Labels to assign to issues.'
       default 'release'

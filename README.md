@@ -52,6 +52,7 @@ These variables have sensible defaults and only need to be configured if you wan
 - `JIRA_API_TOKEN` - The JIRA API token to create issues with
 - `JIRA_COMPONENT` - The JIRA component identifier (optional)
 - `JIRA_LABELS` = "release" - Comma-separated labels to assign to issues
+- `JIRA_ISSUETYPE_ID` = 10007 - The JIRA issue type ID for generated issues
 
 #### Email Notifications
 

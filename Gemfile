@@ -17,6 +17,7 @@ gem "brakeman"
 gem "degu"
 gem "excon"
 gem "faraday-retry"
+gem 'atlassian-jwt', github: 'flori/atlassian-jwt-ruby'
 gem "jira-ruby", "~> 3.0"
 gem "json"
 gem "openssl", ">= 3.3.1"

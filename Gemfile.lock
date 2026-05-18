@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/flori/atlassian-jwt-ruby.git
+  revision: e004dc0ea8879f2c71257636d1b2b3f9434d4918
+  specs:
+    atlassian-jwt (0.2.1)
+      cgi (>= 0.5)
+      jwt (>= 2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -88,8 +96,6 @@ GEM
       mize
       tins (~> 1)
     ast (2.4.3)
-    atlassian-jwt (0.2.1)
-      jwt (~> 2.1)
     atom-tools (2.0.5)
     auth-sanitizer (0.1.2)
       version_gem (~> 1.1, >= 1.1.9)
@@ -483,6 +489,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  atlassian-jwt!
   atom-tools
   awesome_print
   bootsnap
@@ -532,7 +539,7 @@ CHECKSUMS
   all_images (0.12.0) sha256=8d8dee0442ca5751d5317f8d5066415d51e7a5bef335b9ca47617b22ee7fdee8
   amatch (0.6.0) sha256=247996bdce87754a42ed38ce8b22a4b8162e1699a8d353bc36bc96b544bd509d
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
-  atlassian-jwt (0.2.1) sha256=2fd2d87418773f2e140c038cb22e049069708aff2bd0a423a7e1740574e97823
+  atlassian-jwt (0.2.1)
   atom-tools (2.0.5) sha256=95c14c4fde4aafbdc0049fdeb7023dda93e1dc34883d6eb4ef55d629426aa7d6
   auth-sanitizer (0.1.2) sha256=29f7638d74b2a19ff890008f1561165668a78969a4d90bc85e991128825a7c03
   awesome_print (1.9.2) sha256=e99b32b704acff16d768b3468680793ced40bfdc4537eb07e06a4be11133786e

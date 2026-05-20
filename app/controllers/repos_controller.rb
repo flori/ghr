@@ -4,28 +4,35 @@
 # functionality to list all tracked repositories.
 #
 # @example
-#   GET /repos - Returns a JSON array of all tracked repositories
+#   GET /repos - Returns a JSON object containing a paginated array of repositories
 class ReposController < ApplicationController
   include ActionController::MimeResponds
 
-  # Returns a JSON representation of the GithubRepo models as an array of
-  # objects.
+  # Returns a JSON representation of the GithubRepo models.
+  #
+  # Supports pagination via +param[:offset]+ and +param[:limit]+.
   def index
-    render json: GithubRepo.order(:user, :repo).all.map { |github_repo|
-      {
-        url:                  repo_releases_url(github_repo.to_param),
-        atom_url:             repo_releases_url(github_repo.to_param, format: :atom),
-        releases_count:       github_repo.github_releases.count,
-        user:                 github_repo.user,
-        repo:                 github_repo.repo,
-        tag_filter:           github_repo.tag_filter,
-        version_requirement:  github_repo.version_requirement,
-        lightweight:          github_repo.lightweight,
-        import_enabled:       github_repo.import_enabled,
-        configured_notifiers: github_repo.configured_notifiers.map(&:name),
-        created_at:           github_repo.created_at,
-        updated_at:           github_repo.updated_at,
-      }
+    repos = GithubRepo.order(:user, :repo).all.limitate(params)
+    render json: {
+      repos: repos.map { |github_repo|
+        {
+          url:                  repo_releases_url(github_repo.to_param),
+          atom_url:             repo_releases_url(github_repo.to_param, format: :atom),
+          releases_count:       github_repo.github_releases.count,
+          user:                 github_repo.user,
+          repo:                 github_repo.repo,
+          tag_filter:           github_repo.tag_filter,
+          version_requirement:  github_repo.version_requirement,
+          lightweight:          github_repo.lightweight,
+          import_enabled:       github_repo.import_enabled,
+          configured_notifiers: github_repo.configured_notifiers.map(&:name),
+          created_at:           github_repo.created_at,
+          updated_at:           github_repo.updated_at,
+        }
+      },
+      offset: repos.limitate_offset,
+      limit:  repos.limitate_limit,
+      total:  repos.limitate_total,
     }
   end
 end

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+for arg in "$@"
+do
+  argv+=("${arg//$PWD/.}")
+done
+if [[ "${#argv}" = "0" ]]
+then
+  argv+=("./spec")
+fi
+exec docker compose run -e RUBY_YJIT_ENABLE=1 -e START_SIMPLECOV --rm web rspec ${argv[@]}

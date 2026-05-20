@@ -35,7 +35,6 @@
 
 /.yardoc
 /doc
-/.env
 /tags
 /cscope.out
 /backup/*

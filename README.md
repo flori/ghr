@@ -125,7 +125,7 @@ graph LR
 ```
 
 This shows how environment variables are processed through the configuration
-system to reach various application services.
+system to reach all application services.
 
 ## Setup
 
@@ -193,30 +193,39 @@ GithubRepo.add(
 )
 ```
 
-Then http://localhost:8123/repos will return a JSON document like this:
+Then http://localhost:8123/repos will return a limitated JSON document like
+this:
 
 ```json
-[
-  {
-    "url": "https://ghr.gate.ping.de/repos/grafana:grafana",
-    "atom_url": "https://ghr.gate.ping.de/repos/grafana:grafana.atom",
-    "releases_count": 2,
-    "user": "grafana",
-    "repo": "grafana",
-    "tag_filter": "\\Av(\\d+\\.\\d+\\.\\d+)\\z",
-    "version_requirement": [
-      ">=12.1"
-    ],
-    "lightweight": false,
-    "import_enabled": true,
-    "configured_notifiers": [
-      "Email", "JIRA"
-    ],
-    "created_at": "2025-08-28T11:01:04.709Z",
-    "updated_at": "2025-08-28T11:01:09.082Z"
-  }
-]
+{
+  "repos": [
+    {
+      "url": "https://ghr.gate.ping.de/repos/grafana:grafana/releases",
+      "atom_url": "https://ghr.gate.ping.de/repos/grafana:grafana/releases.atom",
+      "releases_count": 2,
+      "user": "grafana",
+      "repo": "grafana",
+      "tag_filter": "\\Av(\\d+\\.\\d+\\.\\d+)\\z",
+      "version_requirement": [
+        ">=12.1"
+      ],
+      "lightweight": false,
+      "import_enabled": true,
+      "configured_notifiers": [
+        "Email", "JIRA"
+      ],
+      "created_at": "2025-08-28T11:01:04.709Z",
+      "updated_at": "2025-08-28T11:01:09.082Z"
+    }
+  ],
+  "offset": 0,
+  "limit": 10,
+  "total": 1
+}
 ```
+
+You can use `offset` and `limit` parameters to limitate the results, e.g.
+`http://localhost:8123/repos?offset=0&limit=10`.
 
 You can then subscribe to the `atom_url` above in your RSS reader to keep track
 of the releases.

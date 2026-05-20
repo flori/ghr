@@ -19,7 +19,7 @@ class ReleasesController < ApplicationController
       render status: :not_found
       return
     end
-    releases = github_repo.github_releases.sort_by(&:version).reverse
+    releases = github_repo.github_releases.sort_by(&:version).reverse.limitate(params)
     respond_to do |format|
       format.atom do
         if releases.empty?
@@ -29,7 +29,12 @@ class ReleasesController < ApplicationController
         end
       end
       format.any do
-        render json: releases.map(&:as_json)
+        render json: {
+          releases: releases.map(&:as_json),
+          offset:   releases.limitate_offset,
+          limit:    releases.limitate_limit,
+          total:    releases.limitate_total,
+        }
       end
     end
   end

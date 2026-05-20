@@ -1,5 +1,10 @@
 #!bin/rails runner
-# vim: set ft=ruby et sw=2 ts=2 autoindent: 
+#
+# Usage: bin/ghr_update_config [-l limit] [-k] [-y] <url_or_file>
+# Options:
+#   -l: set batch limit (default: 100)
+#   -k: disable SSL verification
+#   -y: automatic 'yes' to all prompts
 
 require 'excon'
 Excon.defaults[:middlewares] = (
@@ -8,52 +13,92 @@ Excon.defaults[:middlewares] = (
 require 'json'
 require 'term/ansicolor'
 include Term::ANSIColor
+require 'tins/go'
 
-ARGV.empty? and fail "need a location for JSON input"
-config = case location = ARGV.shift
-         when %r(\Ahttps?://)
-           response = Excon.get(location)
-           if response.status == 200
-             response.body
-           else
-             fail "failed to get #{location.inspect}: #{response.status_line}"
-           end
-         else
-           File.read(location)
-         end
-config = JSON(config, object_class: JSON::GenericObject)
-config.each do |c|
-  user, repo = c.user, c.repo
-  param = "#{user}:#{repo}"
-  jj c
-  if GithubRepo.where(user:, repo:).exists?
-    puts "Repo #{bold{param}} already #{italic{'exists'}} locally."
-    print "Update #{param}? (y/N) "
-    if STDIN.gets =~ /\Ay(es)?$/i
-      GithubRepo.where(
-        user:,
-        repo:
-      ).update!(
-        tag_filter: c.tag_filter,
-        version_requirement: c.version_requirement,
-        lightweight: c.lightweight,
-        configured_notifiers: c.configured_notifiers
-      )
-    end
-    puts bold{"Updated."}
+opts = Tins::GO.go 'l:ky'
+opts[?k] and Excon.defaults[:ssl_verify_peer] = false
+
+# Pagination state
+offset  = 0
+limit   = opts.fetch(?l, 100)
+total   = nil
+
+location = ARGV.shift or abort "Need URL or file as location"
+is_url = location =~ /\Ahttps?:\/\//
+
+loop do
+  # Construct the request URL if we are dealing with a remote source
+  current_location = is_url ? "#{location}?offset=#{offset}&limit=#{limit}" : location
+  
+  begin
+    config_body =
+      if is_url
+        puts "Getting URL #{current_location.inspect}."
+        response = Excon.get(current_location)
+        if response.status == 200
+          response.body
+        else
+          abort "failed to get #{current_location.inspect}: #{response.status_line}"
+        end
+      else
+        puts "Reading file #{current_location.inspect}."
+        File.read(current_location)
+      end
+
+    # Parse using GenericObject for dot-notation access
+    data = JSON(config_body, object_class: JSON::GenericObject)
+  rescue => e
+    fail "Error fetching or parsing config: #{e.message}"
+  end
+
+  # Determine if we have a paginated response (Object) or a legacy list (Array)
+  if data.is_a?(Array)
+    current_batch = data
+    total = data.size
   else
-    puts "Repo #{bold{param}} does #{italic{'not yet exist'}} locally."
-    print "Create #{param}? (y/N) "
-    if STDIN.gets =~ /\Ay(es)?$/i
-      GithubRepo.add(
-        user:,
-        repo:,
-        tag_filter: c.tag_filter,
-        version_requirement: c.version_requirement,
-        lightweight: c.lightweight,
-        configured_notifiers: c.configured_notifiers
-      )
-      puts bold{"Created."}
+    current_batch = data.repos
+    total = data.total
+    # Update offset for the next page
+    offset = data.offset + current_batch.size
+  end
+
+  # Process the current batch of repositories
+  current_batch.each do |c|
+    user, repo = c.user, c.repo
+    param = "#{user}:#{repo}"
+    jj c
+    if GithubRepo.where(user:, repo:).exists?
+      puts "Repo #{bold{param}} already #{italic{'exists'}} locally."
+      print "Update #{param}? (y/N) "
+      if opts[?y] || STDIN.gets =~ /\Ay(es)?$/i
+        GithubRepo.where(user:, repo:).update!(
+          tag_filter: c.tag_filter,
+          version_requirement: c.version_requirement,
+          lightweight: c.lightweight,
+          configured_notifiers: c.configured_notifiers
+        )
+        puts bold{"Updated."}
+      end
+    else
+      puts "Repo #{bold{param}} does #{italic{'not yet exist'}} locally."
+      print "Create #{param}? (y/N) "
+      if opts[?y] || STDIN.gets =~ /\Ay(es)?$/i
+        GithubRepo.add(
+          user:,
+          repo:,
+          tag_filter: c.tag_filter,
+          version_requirement: c.version_requirement,
+          lightweight: c.lightweight,
+          configured_notifiers: c.configured_notifiers
+        )
+        puts bold{"Created."}
+      end
     end
   end
+
+  # Termination conditions:
+  # 1. We've reached or exceeded the total count
+  # 2. The last batch was empty
+  # 3. We're reading a local file (which isn't paginated via URL)
+  break if total.nil? || offset >= total || current_batch.empty? || !is_url
 end

@@ -17,7 +17,7 @@ RUN bundle install -j $(getconf _NPROCESSORS_ONLN)
 
 FROM ${RUBY} AS ghr-web
 
-RUN apk add --no-cache bash tzdata postgresql-client gcompat less
+RUN apk add --no-cache bash tzdata postgresql-client gcompat less git
 
 COPY --from=ghr-builder /usr/local/ /usr/local/
 COPY --from=ghr-builder /app/ /app/

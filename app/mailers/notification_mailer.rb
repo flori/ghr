@@ -37,7 +37,7 @@ class NotificationMailer < ApplicationMailer
     @github_repo = params[:github_repo].full?(:to_param) || 'n/a'
     @exception   = params[:exception]
     to           = notify_user
-    subject      = "Application Error: #{@github_repo}"
+    subject      = "GHR Application Error: #{@github_repo}"
     mail(to:, subject:)
   end
 

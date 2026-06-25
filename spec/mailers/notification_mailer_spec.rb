@@ -60,7 +60,7 @@ describe NotificationMailer, type: :mailer do
     end
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Application Error: foo/bar")
+      expect(mail.subject).to eq("GHR Application Error: foo/bar")
       expect(mail.to).to eq([mail_to])
     end
 

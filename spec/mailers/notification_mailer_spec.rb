@@ -1,5 +1,3 @@
-require "rails_helper"
-
 describe NotificationMailer, type: :mailer do
   describe "github_release_email" do
     let :notifier do

@@ -8,7 +8,7 @@ gem "cgi" # ruby 4+ needs this
 
 gem "octokit"
 gem "pg"
-gem "rufus-scheduler"
+gem "solid_queue"
 gem "simplecov"
 gem "tins", require: "tins/xt"
 gem "atom-tools"

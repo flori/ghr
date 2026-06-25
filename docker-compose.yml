@@ -16,7 +16,6 @@ services:
       GHR_GITHUB_PERSONAL_ACCESS_TOKEN: ${GHR_GITHUB_PERSONAL_ACCESS_TOKEN}
       GHR_HOST:                         ${GHR_HOST}
       GHR_HOSTS_ALLOWED:                ${GHR_HOSTS_ALLOWED:-ghr.localhost}
-      GHR_SCHEDULE_EVERY:               "1h"
       RUBY_YJIT_ENABLE:                 "1"
       EMAIL_ENABLED:                    ${EMAIL_ENABLED}
       EMAIL_NOTIFY_SMTP_URL:            ${EMAIL_NOTIFY_SMTP_URL}
@@ -26,6 +25,7 @@ services:
       JIRA_URL:                         ${JIRA_URL}
       JIRA_PROJECT:                     ${JIRA_PROJECT}
       JIRA_API_TOKEN:                   ${JIRA_API_TOKEN}
+      SOLID_QUEUE_IN_PUMA:              "1"
     stdin_open: true
     tty: true
     ports:

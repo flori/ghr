@@ -63,7 +63,7 @@ code_indexer do
     rspec-mocks
     rspec-rails
     rspec-support
-    rufus-scheduler
+    solid_queue
     stringio
     term-ansicolor
     tins

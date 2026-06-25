@@ -37,11 +37,11 @@ These variables have sensible defaults and only need to be configured if you wan
   production)
 - `GHR_HOSTS_ALLOWED` = "" - Comma-separated list of allowed hostnames for
   Rails
-- `SCHEDULE_EVERY` = "1h" - How often to check for new releases
 - `PORT` = 3000 - Port number the GHR-App can be reached under
 - `RAILS_LOG_LEVEL` = "info" - Rails log level
 - `RAILS_MAX_THREADS` = 3 - Maximum number of Rails threads
 - `RUBY_YJIT_ENABLE` = 1 (non-test) or 0 (test) - Ruby YJIT enable flag
+- `SOLID_QUEUE_IN_PUMA` = "0" - Set to "1" to enable the Solid Queue supervisor within Puma
 
 #### JIRA Integration
 
@@ -140,8 +140,8 @@ $ setup
 $ open http://localhost:8123
 ```
 
-If you deploy this in the cloud, make sure that only one instance is running,
-otherwise the Rufus scheduler might get confused.
+To enable the background scheduler in production or development, ensure that
+the `SOLID_QUEUE_IN_PUMA` environment variable is set to `"1"`.
 
 ## Run specs
 

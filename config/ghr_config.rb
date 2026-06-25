@@ -26,11 +26,6 @@ module GhrConfig
     check  { value.all? { |host| host =~ SIMPLE_HOST_REGEX && host.size <= 253 } }
   end
 
-  SCHEDULE_EVERY = set do
-    description 'Schedule imports of ne GitHub releases every so often'
-    default '1h'
-  end
-
   GITHUB_PERSONAL_ACCESS_TOKEN = set do
     description 'GitHub Personal Access Token for repo access'
     required true
@@ -156,6 +151,8 @@ module GhrConfig
 
     SOLID_QUEUE_IN_PUMA = set do
       description 'Run the Solid Queue supervisor inside of Puma for single-server deployments'
+      activated { it.to_i == 1 }
+      default '0'
     end
 
     PORT = set do
@@ -168,6 +165,12 @@ module GhrConfig
     WEB_CONCURRENCY = set do
       description 'Number of Puma workers activated'
       decode -> n { Integer(n) if n.present? }
+    end
+
+    JOB_CONCURRENCY = set do
+      description 'Number of Background workers activated'
+      default 1
+      decode -> n { Integer(n) }
     end
   end
 

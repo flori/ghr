@@ -15,6 +15,7 @@
 class GithubRepo < ApplicationRecord
   validates :user, presence: true
   validates :repo, presence: true, uniqueness: { scope: :user }
+  validate :version_requirements_must_be_valid
 
   has_many :github_releases, dependent: :destroy
 
@@ -87,5 +88,21 @@ class GithubRepo < ApplicationRecord
   # @return String the unique identifier for this repository in the form of +"user:repo"+.
   def to_param
     "#{user}:#{repo}"
+  end
+
+  private
+
+  # Validates that all entries in the version_requirement array are valid
+  # RubyGems requirements.
+  def version_requirements_must_be_valid
+    return if version_requirement.blank?
+
+    Array(version_requirement).each do |req|
+      begin
+        Gem::Requirement.new([req])
+      rescue ArgumentError
+        errors.add(:version_requirement, "contains an invalid requirement: #{req}")
+      end
+    end
   end
 end

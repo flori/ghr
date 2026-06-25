@@ -2,12 +2,12 @@ require 'rails_helper'
 
 describe GithubReleaseEmailNotifier, type: :model do
   let :github_repo do
-    GithubRepo.create(
+    GithubRepo.create!(
       user: 'foo',
       repo: 'bar',
       tag_filter: tf = '\Av(0)\.(\d+)\.(\d+)\z',
       configured_notifiers: %i[ Email ],
-      version_requirement: %w[ ~>0.44' ]
+      version_requirement: %w[ ~>0.44 ]
     )
   end
 

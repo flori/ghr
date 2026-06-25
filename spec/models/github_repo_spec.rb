@@ -31,7 +31,7 @@ describe GithubRepo, type: :model do
         repo: 'bar',
         tag_filter: tf = '\Av(0)\.(\d+)\.(\d+)\z',
         configured_notifiers: %i[ JIRA ],
-        version_requirement: %w[ ~>0.44' ]
+        version_requirement: %w[ ~>0.44 ]
       )
       expect(repo).to be_a GithubRepo
       expect(repo.user).to eq 'foo'
@@ -52,7 +52,7 @@ describe GithubRepo, type: :model do
         repo: 'metabase',
         tag_filter: tf = '\Av(0)\.(4\d+)\.(\d+)\z',
         configured_notifiers: %i[ JIRA ],
-        version_requirement: %w[ ~>0.44' ]
+        version_requirement: %w[ ~>0.44 ]
       )
     end
   end
@@ -139,6 +139,32 @@ describe GithubRepo, type: :model do
       repo.configured_notifier_jira = true
       repo.save!
       expect(repo.reload.configured_notifiers).to include :JIRA
+    end
+  end
+
+  context 'Version Requirement Validation' do
+    it 'is valid with standard RubyGems requirements' do
+      repo = GithubRepo.new(
+        user: 'foo',
+        repo: 'bar',
+        version_requirement: ['>=1.2.3', '~> 2.0']
+      )
+      expect(repo).to be_valid
+    end
+
+    it 'is invalid with malformed requirements' do
+      repo = GithubRepo.new(
+        user: 'foo',
+        repo: 'bar',
+        version_requirement: ['not-a-version']
+      )
+      expect(repo).not_to be_valid
+      expect(repo).to have(1).error_on(:version_requirement)
+    end
+
+    it 'is valid with an empty requirements list' do
+      repo = GithubRepo.new(user: 'foo', repo: 'bar', version_requirement: [])
+      expect(repo).to be_valid
     end
   end
 end

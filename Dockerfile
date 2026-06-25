@@ -13,7 +13,7 @@ COPY ./vendor/. /app/vendor/
 
 RUN bundle config set bin /usr/local/bin
 
-RUN bundle install -j $(getconf _NPROCESSORS_ONLN)
+RUN bundle install -j $(nproc)
 
 FROM ${RUBY} AS ghr-web
 

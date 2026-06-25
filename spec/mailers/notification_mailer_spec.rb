@@ -36,4 +36,36 @@ describe NotificationMailer, type: :mailer do
       expect(NotificationMailer.new.send(:notify_user)).to eq 'test@example.com'
     end
   end
+
+  describe "error_email" do
+    let :github_repo do
+      double('GithubRepo', to_param: 'foo/bar')
+    end
+
+    let :exception do
+      StandardError.new('Something went wrong!')
+    end
+
+    let :mail do
+      NotificationMailer.with(github_repo:, exception:).error_email
+    end
+
+    let :mail_to do
+      'test@example.com'
+    end
+
+    before do
+      expect_any_instance_of(NotificationMailer).to receive(:notify_user).
+        and_return(mail_to)
+    end
+
+    it "renders the headers" do
+      expect(mail.subject).to eq("Application Error: foo/bar")
+      expect(mail.to).to eq([mail_to])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to include('Something went wrong!')
+    end
+  end
 end

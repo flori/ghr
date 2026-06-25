@@ -29,6 +29,18 @@ class NotificationMailer < ApplicationMailer
     mail(to:, subject:)
   end
 
+  # The error_email method generates and sends an email alert, e. g. when a
+  # GitHub repository import fails.
+  #
+  # @return [ Mail::Message ] the generated email message
+  def error_email
+    @github_repo = params[:github_repo].full?(:to_param) || 'n/a'
+    @exception   = params[:exception]
+    to           = notify_user
+    subject      = "Application Error: #{@github_repo}"
+    mail(to:, subject:)
+  end
+
   private
 
   def notify_user

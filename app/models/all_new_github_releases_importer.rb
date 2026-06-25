@@ -28,6 +28,11 @@ class AllNewGithubReleasesImporter
     rescue => e
       Rails.logger.error "Error #{e.class} #{e.to_s.inspect} while importing releases for #{github_repo.to_param}."
       Rails.logger.error e
+
+      if NotificationMailer.configured?
+        NotificationMailer.with(github_repo:, exception: e).
+          error_email.deliver_now
+      end
     end
     Rails.logger.info "Finished importing new releases!"
   end

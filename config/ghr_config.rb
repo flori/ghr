@@ -171,6 +171,14 @@ module GhrConfig
       description 'Number of Background workers activated'
       default 1
       decode -> n { Integer(n) }
+      required true
+    end
+
+    JOB_THREADS = set do
+      description 'Number of threads per background worker process'
+      default 3
+      decode -> n { Integer(n) }
+      required true
     end
   end
 

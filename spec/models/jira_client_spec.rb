@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe JIRAClient, type: :model do
   before do
     described_class.disconnect

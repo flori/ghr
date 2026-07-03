@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe ReleasesController, type: :controller do
   let :github_repo do
     GithubRepo.create(

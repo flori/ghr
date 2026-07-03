@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe Rack::HealthCheck do
   let :app do
     double('App')

@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe TagFilter, type: :model do
   it 'can match' do
     expect(described_class.new('\A[\d.]+\z').match('1.2.3')).to be_a MatchData

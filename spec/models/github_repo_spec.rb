@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe GithubRepo, type: :model do
   context 'Creating and Finding' do
     it 'can be created' do

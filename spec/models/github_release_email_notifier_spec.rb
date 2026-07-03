@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe GithubReleaseEmailNotifier, type: :model do
   let :github_repo do
     GithubRepo.create!(

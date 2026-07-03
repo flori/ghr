@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe "Repos", type: :request do
   let :github_release do
     GithubRelease.new(

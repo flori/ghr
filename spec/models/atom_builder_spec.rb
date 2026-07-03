@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe AtomBuilder, type: :model do
   let :github_repo do
     GithubRepo.create user: 'metabase', repo: 'metabase'

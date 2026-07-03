@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe AllNewGithubReleasesImporter, type: :model do
   let :github_repo do
     GithubRepo.create(

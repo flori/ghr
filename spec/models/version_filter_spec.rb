@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe VersionFilter, type: :model do
   let :github_repo do
     GithubRepo.new user: 'metabase', repo: 'metabase', tag_filter: '\Av(.+)',

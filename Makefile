@@ -1,6 +1,7 @@
 REVISION := $(shell git rev-parse --short HEAD)
 XDG_CACHE_HOME ?= ${HOME}/.cache
 TAG ?= ${GITHUB_REF_NAME}
+EDITOR ?= vim
 
 check-%:
 	@if [ "${${*}}" = "" ]; then \
@@ -23,7 +24,9 @@ validate-tag:
 	fi # '
 
 release: check-TAG validate-tag
-	git tag "$(TAG)"
+	@changes pending -r "$(TAG)" >"/tmp/release-changes.txt.$$PPID"
+	@"$(EDITOR)" "/tmp/release-changes.txt.$$PPID"
+	git tag "$(TAG)" -a -F "/tmp/release-changes.txt.$$PPID"
 	git push origin "$(TAG)"
 	git push origin master
 

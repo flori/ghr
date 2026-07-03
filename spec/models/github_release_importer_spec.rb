@@ -75,6 +75,15 @@ describe GithubReleaseImporter, type: :model do
             'Content-Type'=>'application/json',
           }).
           to_return(status: 200, body: read_fixture('tags.json'), headers: { 'Content-Type' => 'application/json' })
+
+        stub_request(:get, /https:\/\/github\.com\/metabase\/metabase\/releases\/tag\/.*/).
+          with(headers: {
+            'Accept' => '*/*',
+            'Accept-Encoding' => 'deflate, gzip',
+            'Host' => 'github.com',
+            'User-Agent' => 'excon/1.5.0'
+          }).
+          to_return(status: 200, body: "<html><body><h1>Release Notes</h1><p>This is a mock release body.</p></body></html>", headers: { 'Content-Type' => 'text/html' })
       end
 
       it 'can import new tags from github' do
@@ -103,6 +112,18 @@ describe GithubReleaseImporter, type: :model do
         github_release_importer = described_class.new(github_repo:, notify: true)
         github_release_importer.perform
         expect(github_repo.github_releases.last).to be_pending_notifier_email
+      end
+
+      it 'can convert HTML from github release URL to markdown' do
+        github_repo.update(lightweight: true)
+        github_release_importer = described_class.new(github_repo:, notify: false)
+        github_release_importer.perform
+        expect(github_repo.github_releases.last.body).to eq(<<~EOT)
+          # Release Notes
+
+          This is a mock release body.
+
+        EOT
       end
     end
   end

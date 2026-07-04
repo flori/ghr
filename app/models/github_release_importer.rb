@@ -80,7 +80,7 @@ class GithubReleaseImporter
       @github_repo.repo,
       tag.name,
     ]
-    body = fetch_body_for_tag(tag, html_url)
+    body = fetch_annotation_for_tag(tag)
     github_release = GithubRelease.new(
       url:               tag.tarball_url,
       html_url:          html_url,
@@ -94,28 +94,31 @@ class GithubReleaseImporter
     github_release
   end
 
-  # Fetches the HTML content of a GitHub tag release page and converts it to
-  # Markdown. If the fetch fails or the converted body is blank, it falls back
+  # Fetches the annotation message of a GitHub tag using the Git Data API.
+  # If the tag is lightweight (no annotation) or the fetch fails, it falls back
   # to a default message.
   #
-  # @param tag [Object] The GitHub tag object used for the fallback message.
-  # @param url [String] The URL of the release page to fetch.
-  # @return [String] The converted Markdown content or a default notification
-  #   string.
-  def fetch_body_for_tag(tag, url)
+  # @param tag [Object] The GitHub tag object.
+  # @return [String] The tag annotation message or a default notification string.
+  def fetch_annotation_for_tag(tag)
     default_body = "New tag %s was pushed." % tag.name
 
-    # Fetch HTML content; raise error if status is not 200
-    response = Excon.get(url,
-      expects: 200,
-      connects_timeout: 5,
-      read_timeout: 10
-    )
+    ref = @client.ref([@github_repo.user, @github_repo.repo] * ?/, "tags/#{tag.name}")
+    sha = ref.object.sha
 
-    body = ReverseMarkdown.convert(response.body)
-    body.blank? ? default_body : body
+    if ref.object.type == 'tag'
+      response = @client.send(
+        :request,
+        :get,
+        "/repos/#{@github_repo.user}/#{@github_repo.repo}/git/tags/#{sha}",
+        nil
+      )
+      message = response.message.full? and return message
+    end
+
+    default_body
   rescue => e
-    Rails.logger.error "Failed to fetch/convert release body from #{url}: #{e}"
+    Rails.logger.error "Failed to fetch tag annotation for #{tag.name}: #{e}"
     default_body
   end
 

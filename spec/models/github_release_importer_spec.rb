@@ -74,14 +74,20 @@ describe GithubReleaseImporter, type: :model do
           }).
           to_return(status: 200, body: read_fixture('tags.json'), headers: { 'Content-Type' => 'application/json' })
 
-        stub_request(:get, /https:\/\/github\.com\/metabase\/metabase\/releases\/tag\/.*/).
-          with(headers: {
-            'Accept' => '*/*',
-            'Accept-Encoding' => 'deflate, gzip',
-            'Host' => 'github.com',
-            'User-Agent' => 'excon/1.5.0'
-          }).
-          to_return(status: 200, body: "<html><body><h1>Release Notes</h1><p>This is a mock release body.</p></body></html>", headers: { 'Content-Type' => 'text/html' })
+        # Stub the ref lookup
+        stub_request(:get, %r{https://api.github.com/repos/metabase/metabase/git/refs/tags/v.*}).
+          to_return(status: 200, body: {
+            ref: 'refs/tags/v0.44.5',
+            object: { sha: 'abc123sha', type: 'tag' }
+          }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+        # Stub the tag object lookup
+        stub_request(:get, "https://api.github.com/repos/metabase/metabase/git/tags/abc123sha").
+          to_return(
+            status: 200,
+            body: { message: 'This is a mock annotation.' }.to_json,
+            headers: { 'Content-Type' => 'application/json' }
+          )
       end
 
       it 'can import new tags from github' do
@@ -116,12 +122,7 @@ describe GithubReleaseImporter, type: :model do
         github_repo.update(lightweight: true)
         github_release_importer = described_class.new(github_repo:, notify: false)
         github_release_importer.perform
-        expect(github_repo.github_releases.last.body).to eq(<<~EOT)
-          # Release Notes
-
-          This is a mock release body.
-
-        EOT
+        expect(github_repo.github_releases.last.body).to eq('This is a mock annotation.')
       end
     end
   end

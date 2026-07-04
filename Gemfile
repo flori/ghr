@@ -27,7 +27,6 @@ gem "ostruct"
 gem "term-ansicolor"
 gem "yard"
 gem "const_conf", "~> 0.2"
-gem 'reverse_markdown', '~> 3.0'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 8.0"

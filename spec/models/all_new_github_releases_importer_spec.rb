@@ -3,7 +3,7 @@ describe AllNewGithubReleasesImporter, type: :model do
     GithubRepo.create(
       user: 'metabase',
       repo: 'metabase',
-      tag_filter: '\Av(\d+\.\d+\.\d+)\z',
+      tag_filter: '\\Av(\\d+\\.\\d+\\.\\d+)\\z',
       configured_notifiers: %[ JIRA ],
     )
   end
@@ -66,6 +66,50 @@ describe AllNewGithubReleasesImporter, type: :model do
         expect(NotificationMailer).not_to receive(:with)
         described_class.new.perform
       end
+    end
+  end
+
+  context 'when the import fails transiently' do
+    before do
+      expect_any_instance_of(Kernel).to receive(:sleep).at_least(:once)
+      allow(Rails.logger).to receive(:info)
+    end
+
+    it 'recovers after a few failed attempts' do
+      # First 2 attempts fail, 3rd succeeds
+      importer_double = double
+      expect(importer_double).to receive(:perform).and_raise(JIRA::HTTPError.new('Transient error')).twice
+      expect(importer_double).to receive(:perform).and_return(5)
+
+      expect(GithubReleaseImporter).to receive(:new).exactly(3).times.and_return(importer_double)
+      expect(Rails.logger).to receive(:warn).with(/Retrying import for #{github_repo.to_param}/).twice
+      expect(Rails.logger).to receive(:info).with(/Imported 5 releases for #{github_repo.to_param}/)
+
+      described_class.new.perform
+    end
+  end
+
+  context 'when the import fails persistently' do
+    let(:exception) { JIRA::HTTPError.new('Persistent error') }
+
+    before do
+      expect_any_instance_of(Kernel).to receive(:sleep).at_least(:once)
+      allow(Rails.logger).to receive(:info)
+      expect(NotificationMailer).to receive(:configured?).and_return(true)
+    end
+
+    it 'exhausts all retries and then sends an email' do
+      # Fail 5 times (the limit of Tins::Attempt in the implementation)
+      importer_double = double
+      expect(importer_double).to receive(:perform).and_raise(exception).exactly(5).times
+
+      expect(GithubReleaseImporter).to receive(:new).exactly(5).times.and_return(importer_double)
+      expect(Rails.logger).to receive(:warn).with(/Retrying import for #{github_repo.to_param}/).exactly(4).times
+      expect(NotificationMailer).to receive(:with).
+        with(github_repo: github_repo, exception: an_instance_of(JIRA::HTTPError)).
+        and_return(double(error_email: double(deliver_now: true)))
+
+      described_class.new.perform
     end
   end
 end

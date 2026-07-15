@@ -10,7 +10,6 @@
 #   importer = AllNewGithubReleasesImporter.new
 #   importer.perform
 class AllNewGithubReleasesImporter
-
   # Performs the import of new GitHub releases for all repositories with import
   # enabled.
   #
@@ -22,7 +21,22 @@ class AllNewGithubReleasesImporter
   def perform
     Rails.logger.info "Starting to import new releases…"
     GithubRepo.where(import_enabled: true).find_each do |github_repo|
-      if count = GithubReleaseImporter.new(github_repo:, notify: github_repo.import_enabled).perform
+      count = nil
+      attempt(
+        attempts: 5,
+        sleep: -10,
+        exception_class: [JIRA::HTTPError, Faraday::ConnectionFailed],
+        reraise: true
+      ) do |attempt_count, e|
+        if e
+          Rails.logger.warn(
+            "Retrying import for #{github_repo.to_param} after having caught #{e.class}: #{e}"
+          )
+        end
+        count = GithubReleaseImporter.new(github_repo:, notify: github_repo.import_enabled).perform
+      end
+
+      if count
         Rails.logger.info "Imported #{count} releases for #{github_repo.to_param}."
       end
     rescue => e

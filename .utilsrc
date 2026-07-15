@@ -46,9 +46,12 @@ code_indexer do
     date
     degu
     excon
+    faraday
+    fugit
     infobar
     jira-ruby
     json
+    mail
     mize
     more_math
     octokit

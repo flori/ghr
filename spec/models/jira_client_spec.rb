@@ -61,4 +61,17 @@ describe JIRAClient, type: :model do
     expect(jira_client).to receive(:Issue).and_return issue
     described_class.issue!(summary: 'foo', description: 'bar')
   end
+
+  it 'can register a new issue with a component' do
+    const_conf_as('GhrConfig::JIRA::COMPONENT' => 'MyComponent')
+    issue_object = double('Issue', save!: true)
+    issue_builder = double('IssueBuilder', build: issue_object)
+
+    expect(jira_client).to receive(:Issue).and_return(issue_builder)
+    expect(issue_object).to receive(:save!).with(
+      fields: hash_including(components: [{ name: 'MyComponent' }])
+    )
+
+    described_class.issue!(summary: 'foo', description: 'bar')
+  end
 end

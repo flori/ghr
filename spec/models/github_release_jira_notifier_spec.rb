@@ -38,4 +38,25 @@ describe GithubReleaseJIRANotifier, type: :model do
       described_class.new(github_release:).perform
     }.to change { github_release.pending_notifier_jira }.from(true).to(false)
   end
+
+  it 'logs a warning if JIRAClient is not configured' do
+    github_release = GithubRelease.new(
+      github_repo: github_repo,
+      published_at: Time.now,
+      body: 'foo body',
+      tag_name: 'v1.2.3',
+      name: 'The numbers release',
+      html_url: 'https://foo.bar.com/blubs',
+      url: 'https://foo.bar.com/blubs',
+      pending_notifiers: %i[ JIRA ],
+    )
+
+    allow(JIRAClient).to receive(:configured?).and_return false
+    expect(JIRAClient).not_to receive(:issue!)
+    expect(Rails.logger).to receive(:info).with(/JIRA is not configured omitting JIRA notification/)
+
+    expect {
+      described_class.new(github_release:).perform
+    }.to change { github_release.pending_notifier_jira }.from(true).to(false)
+  end
 end

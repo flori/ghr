@@ -128,6 +128,11 @@ describe GithubReleaseImporter, type: :model do
   end
 
   context 'Github Client' do
+    it 'is built and connects' do
+      expect(GithubClient).to receive(:connect).and_call_original
+      described_class.new(github_repo:, notify: false)
+    end
+
     context 'without access token' do
       after do
         GithubClient.disconnect

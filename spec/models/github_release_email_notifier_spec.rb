@@ -33,4 +33,25 @@ describe GithubReleaseEmailNotifier, type: :model do
       described_class.new(github_release:).perform
     }.to change { github_release.pending_notifier_email }.from(true).to(false)
   end
+
+  it 'logs a warning if NotificationMailer is not configured' do
+    github_release = GithubRelease.new(
+      github_repo: github_repo,
+      published_at: Time.now,
+      body: 'foo body',
+      tag_name: 'v1.2.3',
+      name: 'The numbers release',
+      html_url: 'https://foo.bar.com/blubs',
+      url: 'https://foo.bar.com/blubs',
+      pending_notifiers: %i[ Email ],
+    )
+
+    expect(NotificationMailer).to receive(:configured?).and_return false
+    expect(NotificationMailer).not_to receive(:with)
+    expect(Rails.logger).to receive(:info).with(/E-mail notifications are not configured/)
+
+    expect {
+      described_class.new(github_release:).perform
+    }.to change { github_release.pending_notifier_email }.from(true).to(false)
+  end
 end

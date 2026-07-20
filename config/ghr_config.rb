@@ -4,6 +4,8 @@ module GhrConfig
   description 'Root configuration module'
   prefix      'GHR'
 
+  plugin ConstConf::JSONPlugin
+
   REVISION = set do
     description 'Current software revision of GHR'
     prefix      ''
@@ -208,6 +210,17 @@ module GhrConfig
       prefix ''
       required  { Rails.env.production? }
       sensitive true
+    end
+  end
+
+  module IMPORT
+    description 'GitHub Release Import configuration settings'
+
+    ATTEMPT_CONFIG = set do
+      description 'Retry and backoff configuration for the release import process'
+      required true
+      default '{"attempts":5,"sleep":-10}'
+      decode json
     end
   end
 end

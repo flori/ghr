@@ -22,12 +22,13 @@ class AllNewGithubReleasesImporter
     Rails.logger.info "Starting to import new releases…"
     GithubRepo.where(import_enabled: true).find_each do |github_repo|
       count = nil
-      attempt(
+      opts = {
         attempts: 5,
         sleep: -10,
         exception_class: [JIRA::HTTPError, Faraday::ConnectionFailed],
         reraise: true
-      ) do |attempt_count, e|
+      } | GhrConfig::IMPORT::ATTEMPT_CONFIG
+      attempt(opts) do |attempt_count, e|
         if e
           Rails.logger.warn(
             "Retrying import for #{github_repo.to_param} after having caught #{e.class}: #{e}"

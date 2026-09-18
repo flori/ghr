@@ -10,6 +10,9 @@ services:
     platform: $ARCH
     hostname: ghr.localhost
     image: ghr-web
+    build:
+      context: .
+      target: ghr-web
     volumes:
       - .:/app
     environment:

@@ -41,5 +41,5 @@ push: check-TAG build
 build-info: check-TAG validate-tag
 	@echo "flori303/ghr:$(TAG)"
 
-grype: build-web
+grype: build
 	@docker run -e TERM -e COLORTERM --tty --pull always --rm --volume "${XDG_CACHE_HOME}/grype:/.cache/grype" --volume /var/run/docker.sock:/var/run/docker.sock --name Grype anchore/grype:latest --add-cpes-if-none --by-cve ghr

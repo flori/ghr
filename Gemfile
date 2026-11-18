@@ -19,7 +19,7 @@ gem "excon"
 gem "faraday-retry"
 gem 'atlassian-jwt', github: 'flori/atlassian-jwt-ruby'
 gem "jira-ruby", "~> 3.0"
-gem "json"
+gem "json-generic_object"
 gem "openssl", ">= 3.3.1"
 gem "kramdown"
 gem "kramdown-parser-gfm"

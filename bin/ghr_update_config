@@ -10,7 +10,7 @@ require 'excon'
 Excon.defaults[:middlewares] = (
   Excon.defaults[:middlewares] + [ Excon::Middleware::RedirectFollower ]
 ).uniq
-require 'json'
+require 'json/generic_object'
 require 'term/ansicolor'
 include Term::ANSIColor
 require 'tins/go'

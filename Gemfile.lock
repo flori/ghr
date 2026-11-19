@@ -85,14 +85,14 @@ GEM
       uri (>= 0.13.1)
     addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
-    all_images (0.13.0)
+    all_images (0.14.0)
       fileutils
       search_ui (~> 0.0)
       shellwords
       term-ansicolor (~> 1.11)
       tins (~> 1)
       yaml
-    amatch (0.7.0)
+    amatch (0.8.0)
       mize
       tins (~> 1)
     anonymous_loader (0.1.5)
@@ -187,7 +187,7 @@ GEM
       logger
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
-    infobar (0.16.0)
+    infobar (0.17.0)
       complex_config (~> 0.22)
       more_math
       term-ansicolor (~> 1.11)
@@ -240,8 +240,8 @@ GEM
     minitest (6.1.0)
       drb (~> 2.0)
       prism (>= 1.5, < 3)
-    mize (0.7.0)
-    more_math (1.11.0)
+    mize (0.8.0)
+    more_math (1.12.0)
       mize
       tins (~> 1)
     msgpack (1.8.7)
@@ -304,7 +304,7 @@ GEM
       tins (~> 1.55)
     openssl (4.0.2)
     ostruct (0.6.3)
-    parser (3.3.13.0)
+    parser (3.3.14.0)
       ast (~> 2.4.1)
       racc
     pathname (0.5.0)
@@ -326,7 +326,7 @@ GEM
     prism (2.1.0-x86_64-darwin)
     prism (2.1.0-x86_64-linux-gnu)
     prism (2.1.0-x86_64-linux-musl)
-    pstree (0.6.0)
+    pstree (0.7.0)
     public_suffix (7.0.5)
     puma (8.1.2)
       nio4r (~> 2.0)
@@ -409,7 +409,7 @@ GEM
     sawyer (0.9.3)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
-    search_ui (0.4.0)
+    search_ui (0.5.0)
       amatch (~> 0.0)
       term-ansicolor (~> 1.0)
       tins (~> 1.0)
@@ -435,13 +435,13 @@ GEM
       ruby-progressbar (~> 1.9)
       sourcemap (~> 0.1)
     sync (0.5.0)
-    term-ansicolor (1.11.3)
+    term-ansicolor (1.12.0)
       tins (~> 1)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
     thor (1.5.0)
     timeout (0.6.1)
-    tins (1.62.0)
+    tins (1.63.0)
       bigdecimal
       irb
       mize (~> 0.6)
@@ -459,14 +459,14 @@ GEM
       tins (~> 1.3)
     uri (1.1.2)
     useragent (0.16.11)
-    utils (0.100.0)
+    utils (0.101.0)
       all_images (>= 0.12)
       amatch (~> 0.6)
-      context_spook (~> 1.0)
+      context_spook (~> 1.8)
       debug
       figlet (~> 1.0)
       infobar (~> 0.8)
-      kramdown-ansi (>= 0.4)
+      kramdown-ansi (>= 0.10)
       mize (~> 0.6)
       ollama-ruby (~> 1.26)
       pstree (~> 0.3)
@@ -475,7 +475,7 @@ GEM
       starscope
       term-ansicolor (~> 1.11)
       tins (~> 1.51)
-      unix_socks (~> 0.3)
+      unix_socks (~> 0.5)
       webrick
     version_gem (1.1.17)
     webmock (3.35.0)
@@ -551,8 +551,8 @@ CHECKSUMS
   activestorage (8.1.4.1) sha256=0f4e2f114f3584723a80a2c089aacc6170e765a0b2c385c9782e26ed78f05c66
   activesupport (8.1.4.1) sha256=16ac4f341ca65c85a1fcdb8ac73f68891aae9e3c4a6f9c3a27daed8b00017ed7
   addressable (2.9.2) sha256=9117c7e7d6ee07230e75ce41fb9401ae55354dc654fcd0e862ba41d539e9a610
-  all_images (0.13.0) sha256=fa6135a6334238946c9eb4201e107f91dd0eb6cbbfd78aa645b04f6806ffb082
-  amatch (0.7.0) sha256=d503a09a3b73f96b3ecb14347dcb149830555771a23a9b24e1c4d9f39de03e2b
+  all_images (0.14.0) sha256=d0f7f826fbc34d9ba1ec0c4ad01d8d685bc6e32a0d6852e3fb700e9acfa5f46f
+  amatch (0.8.0) sha256=221efa5e5bdf09a7fb9ea928786d53d26823e2dc2e4e1b731d5585ee39eb4756
   anonymous_loader (0.1.5) sha256=c96a4a1b5f49f320037fae63e931ac15b3823686e4f0ee6f24f75a0ade4227cb
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   atlassian-jwt (0.2.1)
@@ -596,7 +596,7 @@ CHECKSUMS
   hashdiff (1.2.2) sha256=e2e287452b42f18d2a8d82dd48c435e214a81dbadccf49344b956842a3b9127f
   hashie (5.2.0) sha256=357a22635195c2e3911fbbc3de9a7d528843d1f42ab0aae02171048f16332d72
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
-  infobar (0.16.0) sha256=d9d63f2def88b2caeb919cd7976ddc146e3141bf4fb4af30fb07bc39c70fbcb3
+  infobar (0.17.0) sha256=9f5f53b64b2ffa619aa4478b2d0e2a5d6d7bbc3a934784b84a970cbf9d635981
   io-console (0.9.5) sha256=83dd9bbf4c4680416629245b39cd4212eb5f4d9a4ea91804870c1f6b846414d5
   irb (1.19.0) sha256=55ee56acbdd6c9fe06a2e6909f46a24e5c41f45f16906bab04e8049cf46f1d27
   jira-ruby (3.2.2) sha256=38c27ed40b75c12921f963f3614390559f8538185a00d489ba0aedde6bc3945f
@@ -614,8 +614,8 @@ CHECKSUMS
   mime-types-data (3.2026.1103) sha256=cda7af94d895f1fd33e000acea800e6ed31e4c861e3d6c1a27c8b74f9e44dc64
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.1.0) sha256=ff373595aa8888631e8a5463986a76b3845346ae6d7fa46e139c1633d418076e
-  mize (0.7.0) sha256=a435495187aa2c26c0cd28cfeba2aaf829dbe55641ed9564ba8c6831dce92bc4
-  more_math (1.11.0) sha256=2f7b507aa935cf3762e8f9153cc661a300dc2ac257b3231af35754fc17c8d527
+  mize (0.8.0) sha256=0ecfe6aba0f0a42bfcb771c12e085703e797da6e5446a1f2cd8dc90d6fba87c0
+  more_math (1.12.0) sha256=e7a3ace51b5c4328f4172bad8cf73442c9d082e986609d179c4732d569f8333f
   msgpack (1.8.7) sha256=dfefec761b5f9047e6e8d95d2c7f8af4b3725d984a01942adc533aa819a2df33
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
   net-http (0.10.0) sha256=1a2ff6e37a05724973c43f2bf7bf105f59c36a4cd0a7e9b1c021a0a566987c27
@@ -639,7 +639,7 @@ CHECKSUMS
   ollama-ruby (1.27.2) sha256=44bc06f9ae185df5c66e5c01285c585f4689c464155ed5a4d44a9fd4ae317ff5
   openssl (4.0.2) sha256=1037ad2868ae58df9ad917891c0c0f9815a1172f6846d4bcdd508e4c2ee747c2
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
-  parser (3.3.13.0) sha256=e02f9b63c2fe05b0c68f692ba4df89b3cb113b663964f75d988fbebfd6c3deca
+  parser (3.3.14.0) sha256=62f8f76af7b919425ee2d811880e9dcb8011ab40bfd59970dfb583141697e58f
   pathname (0.5.0) sha256=d5a331784f6e1f2fefb31c2ff0b8855aabfb661d807284ead9fa47b883d81623
   pg (1.7.0) sha256=f7b536501284e883d4c9ef86dbde0313063e4aaafc23575b0017b0d572a26afb
   pg (1.7.0-aarch64-linux) sha256=101dd3a261000eb64b03ff41a5890674b735b626dbdce88652969b59fb0b1157
@@ -658,7 +658,7 @@ CHECKSUMS
   prism (2.1.0-x86_64-darwin) sha256=6c645d8e6afc742956c7518220ce5106367727c4d9980ac9ab386d55004ddab4
   prism (2.1.0-x86_64-linux-gnu) sha256=b2b647afce09551e650b8bb3e2fc91d7d73d392a09534ca307ec0d619c33bfd4
   prism (2.1.0-x86_64-linux-musl) sha256=249f45981726923e259b927902246219fa25ad10a76f43849c9aee1a3d3ec5b8
-  pstree (0.6.0) sha256=9c815c23b2a8b0239eb1bc685af92b6e82f1cb0d349005f6ec056f2c5b3912e1
+  pstree (0.7.0) sha256=da5653143e6fe4e33d9b38684124b94089d0e29d22955433695912aa6d0a7a93
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   puma (8.1.2) sha256=3a6d9a34c9a4d0175eabd11b703939b5d43ebe08bc2534ac7dfd4df33a6ceedc
   raabro (1.5.0) sha256=3f998a7bc84f9c84df3ab580634d2e0a5bda4f0841168d56035f529c9877440a
@@ -686,7 +686,7 @@ CHECKSUMS
   rspec-support (3.13.8) sha256=e4160030309b7e3e9d9863dfe720a35dfcc577162f5402cd68fc8c5258a0ffd6
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   sawyer (0.9.3) sha256=0d0f19298408047037638639fe62f4794483fb04320269169bd41af2bdcf5e41
-  search_ui (0.4.0) sha256=07c96ac009c222e4a9d4e6dba4b89cf79bf939dd844c4bffee27b1274d5e744f
+  search_ui (0.5.0) sha256=8133327de5abbc55eea11046a4deeb741faa2654e7072a8ad2838c3ad423f2b8
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   shellwords (0.2.2) sha256=b8695a791de2f71472de5abdc3f4332f6535a4177f55d8f99e7e44266cd32f94
   simplecov (1.3.2) sha256=2a22ec1759f1b8db60881a2e038758956fc69ef93ed669be0bde0678de6d0e85
@@ -695,11 +695,11 @@ CHECKSUMS
   sourcemap (0.1.1) sha256=889fc666bdf7182d09abff3461088547c0510d004dc47a73094f409cde0f2150
   starscope (1.6.1) sha256=e4aec001cac4088a1e15852df4718e4c2d8474714fdabac5eaa88d3a77a4b563
   sync (0.5.0) sha256=668356cc07c59ac7ed9ecf34fec3929831f179c07adb1f3e1c3b7a1609a638fd
-  term-ansicolor (1.11.3) sha256=8c01ec3abd095eb94dca8aed5a127d36e594239eb525eb306259c9e930534603
+  term-ansicolor (1.12.0) sha256=718613614d6364527452b22f839dc60e15941e710bc3b901f70ad1128f3b4c1c
   terminal-table (4.0.0) sha256=f504793203f8251b2ea7c7068333053f0beeea26093ec9962e62ea79f94301d2
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   timeout (0.6.1) sha256=78f57368a7e7bbadec56971f78a3f5ecbcfb59b7fcbb0a3ed6ddc08a5094accb
-  tins (1.62.0) sha256=3435c1825833df0b060740ebb9f988e67600b439d01aa6bb7e89d35b9bb83da8
+  tins (1.63.0) sha256=bb83cca3974b358d2f5c4dedce18ac1cfe7bda62316ec4cbb0601889b472eab0
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   unicode-display_width (3.3.0) sha256=4b7aa66a4b11db50f6f7e98411215cd0dd10eaecb665d36eec5bcacb3fa0b613
@@ -707,7 +707,7 @@ CHECKSUMS
   unix_socks (0.5.0) sha256=507ef43014651f5e3b9c09c08497502707751126e75475f1e70470f761099725
   uri (1.1.2) sha256=89292e98eabbef6248b0a0ed5e7e398e152f83f17560023a6d94a7f492b169fb
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
-  utils (0.100.0) sha256=931c32fb43cd0d197f2abfd8ef67ac4a70c62953876fa99dc5e8f625c3ff5ee1
+  utils (0.101.0) sha256=bede11b710d6c96553abf7c1b27db9b34fcaa38b115ce265b6b6a3cfbe577196
   version_gem (1.1.17) sha256=70420b9675fbb77a7e7e7eb8ed6580dd4dd25be53b1454c1a79cc18f3c5a8dfd
   webmock (3.35.0) sha256=cb9f61718a0004f5d0c65f8dc36764b714213902599fbd3ae63a7a08f22a78b3
   webrick (1.9.2) sha256=beb4a15fc474defed24a3bda4ffd88a490d517c9e4e6118c3edce59e45864131
